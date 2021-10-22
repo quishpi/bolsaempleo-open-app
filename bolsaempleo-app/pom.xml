@@ -9,13 +9,28 @@
 	</parent>
 	<artifactId>bolsaempleo-app</artifactId>
 	<properties>
-        <filter.src>${basedir}/..</filter.src>
-    </properties>
+		<filter.src>${basedir}/..</filter.src>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>ec.edu.bolsaempleo</groupId>
-			<artifactId>bolsaempleo-persistence</artifactId>
+			<artifactId>bolsaempleo-service</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<aside class="main-sidebar sidebar-dark-primary elevation-4"> <!-- Brand Logo -->
+	<a href="../escritorio/index.xhtml" class="brand-link"> <img
+		src="/resources/images/AdminLTELogo.png" alt="Bolsa de empleo"
+		class="brand-image img-circle elevation-3" style="opacity: .8" /> <span
+		class="brand-text font-weight-light">Bolsa de empleo</span>
+	</a> <!-- Sidebar -->
+	<div class="sidebar">
+		<!-- Sidebar Menu -->
+		<nav class="mt-2">
+		<ul class="nav nav-pills nav-sidebar flex-column"
+			data-widget="treeview" role="menu" data-accordion="false">
+			<ui:insert name="nmu-configuracion">
+				<ui:include src="menu/mnu-admin.xhtml" />
+			</ui:insert>
+			<li class="nav-header">EXAMPLES</li>
+		</ul>
+		</nav>
+		<!-- /.sidebar-menu -->
+	</div>
+	<!-- /.sidebar -->
+	</aside>
+</h:body>
+</html>

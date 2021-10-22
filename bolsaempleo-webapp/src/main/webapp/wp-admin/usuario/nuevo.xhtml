@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="title">Usuarios - nuevo</ui:define>
+	<ui:define name="content">
+		<h:form id="frm" update="growl">
+			<p:growl id="growl" sticky="false" life="5000" showDetail="false"
+				autoUpdate="true" />
+			<div class="col-lg-6 col-md-12 col-sm-12 position-relative mb-4">
+				<div class="mb-3">
+					<label class="form-label">Email </label>
+					<p:inputText type="email" class="form-control"
+						placeholder="name@example.com" />
+				</div>
+				<div class="mb-3">
+					<h:outputLabel for="pwd" value="Password" />
+					<p:inputText id="pwd" class="form-control" type="password"
+						value="password" />
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Role</label> <br />
+					<p:selectOneMenu id="optRole" value="">
+						<f:selectItem itemLabel="Candidato" itemValue="1" />
+						<f:selectItem itemLabel="Empleador" itemValue="2" />
+						<f:selectItem itemLabel="Administrador" itemValue="3" />
+					</p:selectOneMenu>
+					<div class="p-field p-col-12 p-md-4"></div>
+				</div>
+			</div>
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" life="5000">
+				<p:autoUpdate />
+			</p:messages>
+			<script>
+				//<![CDATA[
+
+				//]]>
+			</script>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="#{root}/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="title">Usuarios</ui:define>
+	<ui:define name="content">
+		<h:form id="frm" update="growl">
+			<p:growl id="growl" sticky="false" life="5000" showDetail="false"
+				autoUpdate="true" />
+			<div
+				class="col-lg-12 col-md-12 col-sm-12 container justify-content-center">
+				<div>
+					Bienvenidos
+				</div>
+			</div>
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" life="5000">
+				<p:autoUpdate />
+			</p:messages>
+			<script>
+				//<![CDATA[
+
+				//]]>
+			</script>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -16,14 +16,14 @@
 	<packaging>pom</packaging>
 	<name>bolsaempleo</name>
 	<description>Bolsa de empleo</description>
-	
+
 	<properties>
-	<env>dev</env>
+		<env>dev</env>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <org.hibernate.validator.version>7.0.1.Final</org.hibernate.validator.version>
-        <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <filter.src>${basedir}</filter.src>
+		<java.version>1.8</java.version>
+		<org.hibernate.validator.version>7.0.1.Final</org.hibernate.validator.version>
+		<javax.validation.version>2.0.1.Final</javax.validation.version>
+		<filter.src>${basedir}</filter.src>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -51,31 +51,46 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	<profiles>
+		<profile>
+			<id>development</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<env>prd</env>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<filters>
 			<filter>${filter.src}/src/filters/filter-${env}.properties</filter>
 		</filters>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
 
 	<modules>
 		<module>bolsaempleo-domain</module>
 		<module>bolsaempleo-persistence</module>
 		<module>bolsaempleo-app</module>
+		<module>bolsaempleo-service</module>
+		<module>bolsaempleo-common</module>
 		<module>bolsaempleo-webapp</module>
 	</modules>
 </project>
