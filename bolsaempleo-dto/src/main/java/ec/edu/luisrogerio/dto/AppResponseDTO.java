@@ -1,4 +1,4 @@
-package ec.edu.luisrogerio.app.dto;
+package ec.edu.luisrogerio.dto;
 
 import java.io.Serializable;
 

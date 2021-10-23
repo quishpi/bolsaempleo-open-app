@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.luisrogerio.dto.AppResponseDTO;
-import ec.edu.luisrogerio.dto.ProvinciaDTO;
-import ec.edu.luisrogerio.service.crud.ProvinciaService;
+import ec.edu.luisrogerio.dto.CiudadDTO;
+import ec.edu.luisrogerio.service.crud.CiudadService;
 import ec.edu.luisrogerio.app.utils.Constants;
 
 @RestController
-@RequestMapping(value = Constants.URI_API_V1_PROVINCIA)
-public class ProvinciaController {
+@RequestMapping(value = Constants.URI_API_V1_CIUDAD)
+public class CiudadController {
 
 	@Autowired
-	private ProvinciaService provinciaService;
+	private CiudadService ciudadService;
 
 	@GetMapping(value = "/lista", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> findAll() {
-		List<ProvinciaDTO> lista = provinciaService.buscarTodo(new ProvinciaDTO());
+		List<CiudadDTO> lista = ciudadService.buscarTodo(new CiudadDTO());
 		if (!ObjectUtils.isEmpty(lista)) {
-			AppResponseDTO<List<ProvinciaDTO>> response = new AppResponseDTO<List<ProvinciaDTO>>(true, lista);
+			AppResponseDTO<List<CiudadDTO>> response = new AppResponseDTO<List<CiudadDTO>>(true, lista);
 			return (new ResponseEntity<Object>(response, HttpStatus.OK));
 		} else {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
@@ -40,11 +40,11 @@ public class ProvinciaController {
 
 	@GetMapping(value = "/{nombre}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getByNombre(@PathVariable("nombre") String nombre) {
-		ProvinciaDTO provinciaDto = new ProvinciaDTO();
+		CiudadDTO provinciaDto = new CiudadDTO();
 		provinciaDto.setNombre(nombre);
-		List<ProvinciaDTO> lista = provinciaService.buscarTodo(provinciaDto);
+		List<CiudadDTO> lista = ciudadService.buscarTodo(provinciaDto);
 		if (!ObjectUtils.isEmpty(lista)) {
-			AppResponseDTO<List<ProvinciaDTO>> response = new AppResponseDTO<List<ProvinciaDTO>>(true, lista);
+			AppResponseDTO<List<CiudadDTO>> response = new AppResponseDTO<List<CiudadDTO>>(true, lista);
 			return (new ResponseEntity<Object>(response, HttpStatus.OK));
 		} else {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
@@ -52,14 +52,14 @@ public class ProvinciaController {
 	}
 
 	@PostMapping(value = "/guardar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> insert(@RequestBody ProvinciaDTO provinciaDto) {
-		provinciaService.guardar(provinciaDto);
+	public ResponseEntity<Object> insert(@RequestBody CiudadDTO ciudadDto) {
+		ciudadService.guardar(ciudadDto);
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/{id}/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody ProvinciaDTO provinciaDto) {
-		provinciaService.actualizar(id, provinciaDto);
+	public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody CiudadDTO provinciaDto) {
+		ciudadService.actualizar(id, provinciaDto);
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 }

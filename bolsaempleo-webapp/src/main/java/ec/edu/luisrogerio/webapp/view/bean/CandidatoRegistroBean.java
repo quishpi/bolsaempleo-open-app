@@ -95,7 +95,7 @@ public class CandidatoRegistroBean implements Serializable {
 			} else {
 				Mensajes.addMsg(MensajesTipo.ERROR, "No se pudo guardar. Revise los datos");
 			}
-		}else {
+		} else {
 			Mensajes.addMsg(MensajesTipo.ERROR, "No se pudo guardar. Revise los datos");
 		}
 

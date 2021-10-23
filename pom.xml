@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>ec.edu.bolsaempleo</groupId>
+	<groupId>ec.edu.luisrogerio</groupId>
 	<artifactId>bolsaempleo-open-api</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
@@ -25,21 +25,54 @@
 		<javax.validation.version>2.0.1.Final</javax.validation.version>
 		<filter.src>${basedir}</filter.src>
 	</properties>
+	<modules>
+		<module>bolsaempleo-domain</module>
+		<module>bolsaempleo-persistence</module>
+		<module>bolsaempleo-app</module>
+		<module>bolsaempleo-service</module>
+		<module>bolsaempleo-common</module>
+		<module>bolsaempleo-webapp</module>
+		<module>bolsaempleo-dto</module>
+	</modules>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.5.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -85,12 +118,5 @@
 		</resources>
 	</build>
 
-	<modules>
-		<module>bolsaempleo-domain</module>
-		<module>bolsaempleo-persistence</module>
-		<module>bolsaempleo-app</module>
-		<module>bolsaempleo-service</module>
-		<module>bolsaempleo-common</module>
-		<module>bolsaempleo-webapp</module>
-	</modules>
+
 </project>
