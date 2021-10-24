@@ -3,20 +3,15 @@ package ec.edu.luisrogerio.service;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericCRUDService<ENTITY, DTO> {
+public interface GenericCRUDService<ENTITY, TYPE> {
 
-	public void guardar(DTO dto);
+	public void guardar(ENTITY entity);
 
-	public void actualizar(Long id, DTO dto);
+	public void actualizar(ENTITY entity);
 
 	//public void eliminar(ENTITY entity);
 
-	public List<DTO> buscarTodo(DTO dto);
+	public List<ENTITY> buscarTodo(ENTITY entity);
 
-	public abstract Optional<ENTITY> buscar(Long id, DTO dto);
-	
-	public ENTITY mapTo(DTO dto);
-	
-	public DTO build(ENTITY entity);
-
+	public abstract Optional<ENTITY> buscar(ENTITY entity);
 }

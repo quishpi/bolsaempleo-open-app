@@ -10,33 +10,30 @@ import ec.edu.luisrogerio.common.AppException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-public abstract class GenericCRUDServiceImpl<ENTITY, DTO> implements GenericCRUDService<ENTITY, DTO> {
+public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRUDService<ENTITY, TYPE> {
 
 	@Autowired
 	private JpaRepository<ENTITY, Long> repository;
 
 	@Override
-	public void guardar(DTO dto) {
-		Optional<ENTITY> optional = buscar(0L,dto);
+	public void guardar(ENTITY entity) {
+		Optional<ENTITY> optional = buscar(entity);
 		if (optional.isPresent()) {
-			throw new AppException(String.format("Ya existe en la base de datos", dto));
+			throw new AppException(String.format("Ya existe en la base de datos", entity));
 		} else {
-			ENTITY entity = mapTo(dto);
 			repository.save(entity);
 		}
 	}
 
 	@Override
-	public void actualizar(Long id, DTO dto) {
-		Optional<ENTITY> optional = buscar(id, dto);
+	public void actualizar(ENTITY entity) {
+		Optional<ENTITY> optional = buscar(entity);
 		if (optional.isPresent()) {
-			ENTITY entity = mapTo(dto);
 			repository.save(entity);
 		} else {
-			throw new AppException(String.format("No existe en la base de datos", dto));
+			throw new AppException(String.format("No existe en la base de datos", entity));
 		}
 	}
 
@@ -48,24 +45,16 @@ public abstract class GenericCRUDServiceImpl<ENTITY, DTO> implements GenericCRUD
 	 * dtoObject)); } }
 	 */
 	@Override
-	public List<DTO> buscarTodo(DTO dto) {
-		ENTITY domainObject = mapTo(dto);
+	public List<ENTITY> buscarTodo(ENTITY entity) {
 		ExampleMatcher matcher = ExampleMatcher.matching()
 				.withIgnoreNullValues()
 				.withIgnorePaths("id");
-		List<ENTITY> lstObjs = repository.findAll(Example.of(domainObject, matcher));
-		List<DTO> dtoList=lstObjs.stream()
-				.map(obj -> build(obj))
-				.collect(Collectors.toList());
-		if(dtoList.isEmpty())
-			throw new AppException(String.format("No existe en la base de datos", dto));
-		return dtoList;
+		List<ENTITY> lstObjs = repository.findAll(Example.of(entity, matcher));
+		
+		if(lstObjs.isEmpty())
+			throw new AppException(String.format("No existe en la base de datos", entity));
+		return lstObjs;
 	}
 
-	@Override
-	public abstract Optional<ENTITY> buscar(Long id, DTO dto);
-
-	@Override
-	public abstract ENTITY mapTo(DTO dto);
-
+	
 }

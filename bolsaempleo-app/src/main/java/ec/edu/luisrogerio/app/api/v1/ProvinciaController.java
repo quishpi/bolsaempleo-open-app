@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.luisrogerio.dto.AppResponseDTO;
-import ec.edu.luisrogerio.dto.ProvinciaDTO;
 import ec.edu.luisrogerio.service.crud.ProvinciaService;
 import ec.edu.luisrogerio.app.utils.Constants;
+import ec.edu.luisrogerio.domain.Provincia;
 
 @RestController
 @RequestMapping(value = Constants.URI_API_V1_PROVINCIA)
@@ -29,9 +29,9 @@ public class ProvinciaController {
 
 	@GetMapping(value = "/lista", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> findAll() {
-		List<ProvinciaDTO> lista = provinciaService.buscarTodo(new ProvinciaDTO());
+		List<Provincia> lista = provinciaService.buscarTodo(new Provincia());
 		if (!ObjectUtils.isEmpty(lista)) {
-			AppResponseDTO<List<ProvinciaDTO>> response = new AppResponseDTO<List<ProvinciaDTO>>(true, lista);
+			AppResponseDTO<List<Provincia>> response = new AppResponseDTO<List<Provincia>>(true, lista);
 			return (new ResponseEntity<Object>(response, HttpStatus.OK));
 		} else {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
@@ -40,11 +40,11 @@ public class ProvinciaController {
 
 	@GetMapping(value = "/{nombre}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> getByNombre(@PathVariable("nombre") String nombre) {
-		ProvinciaDTO provinciaDto = new ProvinciaDTO();
+		Provincia provinciaDto = new Provincia();
 		provinciaDto.setNombre(nombre);
-		List<ProvinciaDTO> lista = provinciaService.buscarTodo(provinciaDto);
+		List<Provincia> lista = provinciaService.buscarTodo(provinciaDto);
 		if (!ObjectUtils.isEmpty(lista)) {
-			AppResponseDTO<List<ProvinciaDTO>> response = new AppResponseDTO<List<ProvinciaDTO>>(true, lista);
+			AppResponseDTO<List<Provincia>> response = new AppResponseDTO<List<Provincia>>(true, lista);
 			return (new ResponseEntity<Object>(response, HttpStatus.OK));
 		} else {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
@@ -52,14 +52,14 @@ public class ProvinciaController {
 	}
 
 	@PostMapping(value = "/guardar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> insert(@RequestBody ProvinciaDTO provinciaDto) {
-		provinciaService.guardar(provinciaDto);
+	public ResponseEntity<Object> insert(@RequestBody Provincia entity) {
+		provinciaService.guardar(entity);
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/{id}/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody ProvinciaDTO provinciaDto) {
-		provinciaService.actualizar(id, provinciaDto);
+	@PutMapping(value = "/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> update(@RequestBody Provincia entity) {
+		provinciaService.actualizar(entity);
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 }

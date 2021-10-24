@@ -7,12 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ec.edu.luisrogerio.domain.User;
-import ec.edu.luisrogerio.dto.UserDTO;
 import ec.edu.luisrogerio.persistence.UserRepository;
 import ec.edu.luisrogerio.service.GenericCRUDServiceImpl;
 
 @Service
-public class UserService extends GenericCRUDServiceImpl<User, UserDTO> {
+public class UserService extends GenericCRUDServiceImpl<User, Long> {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -21,23 +20,8 @@ public class UserService extends GenericCRUDServiceImpl<User, UserDTO> {
 	private UserRepository entityRepository;
 
 	@Override
-	public UserDTO build(User entity) {
-		return null;
-	}
-
-	@Override
-	public Optional<User> buscar(Long id, UserDTO dto) {
-		return entityRepository.findByUsername(dto.getUsername());
-	}
-
-	@Override
-	public User mapTo(UserDTO dto) {
-		User user = new User();
-		user.setActive(dto.isActive());
-		user.setPassword(passwordEncoder.encode(dto.getPassword()));
-		user.setRole(dto.getRole());
-		user.setUsername(dto.getUsername());
-		return user;
+	public Optional<User> buscar(User entity) {
+		return entityRepository.findByUsername(entity.getUsername());
 	}
 
 }
