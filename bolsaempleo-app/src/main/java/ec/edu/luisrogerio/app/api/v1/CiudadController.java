@@ -57,9 +57,9 @@ public class CiudadController {
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/{id}/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody CiudadDTO provinciaDto) {
-		ciudadService.actualizar(id, provinciaDto);
+	@PutMapping(value = "/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> update(@RequestBody CiudadDTO provinciaDto) {
+		ciudadService.actualizar(provinciaDto);
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 }

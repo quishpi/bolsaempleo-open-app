@@ -7,13 +7,13 @@ public interface GenericCRUDService<ENTITY, DTO> {
 
 	public void guardar(DTO dto);
 
-	public void actualizar(Long id, DTO dto);
+	public void actualizar(DTO dto);
 
 	//public void eliminar(ENTITY entity);
 
 	public List<DTO> buscarTodo(DTO dto);
 
-	public abstract Optional<ENTITY> buscar(Long id, DTO dto);
+	public abstract Optional<ENTITY> buscar(DTO dto);
 	
 	public ENTITY mapTo(DTO dto);
 	

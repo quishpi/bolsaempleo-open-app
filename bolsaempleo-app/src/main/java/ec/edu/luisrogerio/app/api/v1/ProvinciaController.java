@@ -57,9 +57,9 @@ public class ProvinciaController {
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/{id}/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> update(@PathVariable("id") Long id, @RequestBody ProvinciaDTO provinciaDto) {
-		provinciaService.actualizar(id, provinciaDto);
+	@PutMapping(value = "/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> update(@RequestBody ProvinciaDTO provinciaDto) {
+		provinciaService.actualizar(provinciaDto);
 		return new ResponseEntity<>(new AppResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 }

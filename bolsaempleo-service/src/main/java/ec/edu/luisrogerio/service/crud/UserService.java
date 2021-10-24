@@ -26,7 +26,7 @@ public class UserService extends GenericCRUDServiceImpl<User, UserDTO> {
 	}
 
 	@Override
-	public Optional<User> buscar(Long id, UserDTO dto) {
+	public Optional<User> buscar(UserDTO dto) {
 		return entityRepository.findByUsername(dto.getUsername());
 	}
 

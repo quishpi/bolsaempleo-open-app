@@ -17,8 +17,8 @@ public class ProvinciaService extends GenericCRUDServiceImpl<Provincia, Provinci
 	private ProvinciaRepository entityRepository;
 
 	@Override
-	public Optional<Provincia> buscar(Long id, ProvinciaDTO dto) {
-		return entityRepository.findById(id);
+	public Optional<Provincia> buscar(ProvinciaDTO dto) {
+		return entityRepository.findById(dto.getId());
 	}
 
 	@Override

@@ -18,26 +18,28 @@ public class CiudadService extends GenericCRUDServiceImpl<Ciudad, CiudadDTO> {
 
 	@Autowired
 	private CiudadRepository entityRepository;
-	
+
 	@Autowired
 	private ProvinciaRepository provinciaRepository;
 
 	@Override
-	public Optional<Ciudad> buscar(Long id, CiudadDTO dto) {
-		return entityRepository.findById(id);
+	public Optional<Ciudad> buscar(CiudadDTO dto) {
+		return entityRepository.findById(dto.getId());
 	}
 
 	@Override
 	public Ciudad mapTo(CiudadDTO dto) {
-		if(dto.getId()==null) return new Ciudad();
 		Ciudad entity = new Ciudad();
 		entity.setId(dto.getId());
 		entity.setNombre(dto.getNombre());
-		Optional<Provincia> provincia = Optional.ofNullable(new Provincia());
-		provincia =provinciaRepository.findById(dto.getProvincia_id());
-		if(!provincia.isPresent())
-			throw new AppException(String.format("No existe la provincia en la base de datos", dto));
-		entity.setProvincia(provincia.get());
+		if (dto.getId() != null) {
+			Optional<Provincia> provincia = Optional.ofNullable(new Provincia());
+			provincia = provinciaRepository.findById(dto.getProvincia_id());
+			if (!provincia.isPresent())
+				throw new AppException(String.format("No existe la provincia en la base de datos", dto));
+			entity.setProvincia(provincia.get());
+		} else
+			entity = new Ciudad();
 		return entity;
 	}
 

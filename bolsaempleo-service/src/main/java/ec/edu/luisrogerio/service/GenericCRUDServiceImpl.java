@@ -20,7 +20,7 @@ public abstract class GenericCRUDServiceImpl<ENTITY, DTO> implements GenericCRUD
 
 	@Override
 	public void guardar(DTO dto) {
-		Optional<ENTITY> optional = buscar(0L,dto);
+		Optional<ENTITY> optional = buscar(dto);
 		if (optional.isPresent()) {
 			throw new AppException(String.format("Ya existe en la base de datos", dto));
 		} else {
@@ -30,8 +30,8 @@ public abstract class GenericCRUDServiceImpl<ENTITY, DTO> implements GenericCRUD
 	}
 
 	@Override
-	public void actualizar(Long id, DTO dto) {
-		Optional<ENTITY> optional = buscar(id, dto);
+	public void actualizar(DTO dto) {
+		Optional<ENTITY> optional = buscar(dto);
 		if (optional.isPresent()) {
 			ENTITY entity = mapTo(dto);
 			repository.save(entity);
@@ -63,7 +63,7 @@ public abstract class GenericCRUDServiceImpl<ENTITY, DTO> implements GenericCRUD
 	}
 
 	@Override
-	public abstract Optional<ENTITY> buscar(Long id, DTO dto);
+	public abstract Optional<ENTITY> buscar(DTO dto);
 
 	@Override
 	public abstract ENTITY mapTo(DTO dto);
