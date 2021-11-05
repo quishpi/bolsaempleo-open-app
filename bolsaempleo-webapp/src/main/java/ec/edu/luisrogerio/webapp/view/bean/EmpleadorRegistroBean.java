@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ec.edu.luisrogerio.domain.Ciudad;
-import ec.edu.luisrogerio.domain.DatosCandidato;
+import ec.edu.luisrogerio.domain.DatosEmpleador;
 import ec.edu.luisrogerio.domain.Provincia;
 import ec.edu.luisrogerio.domain.User;
 import ec.edu.luisrogerio.service.crud.CiudadService;
-import ec.edu.luisrogerio.service.crud.DatosCandidatoService;
+import ec.edu.luisrogerio.service.crud.DatosEmpleadorService;
 import ec.edu.luisrogerio.service.crud.ProvinciaService;
 import ec.edu.luisrogerio.service.crud.UserService;
 import ec.edu.luisrogerio.webapp.enums.MensajesTipo;
@@ -33,7 +33,7 @@ import lombok.Setter;
 @Setter
 @Component
 @Scope("view")
-public class CandidatoRegistroBean implements Serializable {
+public class EmpleadorRegistroBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private List<Provincia> provincias;
@@ -41,8 +41,9 @@ public class CandidatoRegistroBean implements Serializable {
 
 	private List<Ciudad> ciudades;
 	private Ciudad selectedCiudad;
-	private DatosCandidato candidato;
-	private String fechaNacimiento;
+
+	private DatosEmpleador empleador;
+
 	private String password;
 	private String repitePassword;
 
@@ -53,7 +54,7 @@ public class CandidatoRegistroBean implements Serializable {
 	private CiudadService ciudadService;
 
 	@Autowired
-	private DatosCandidatoService candidatoService;
+	private DatosEmpleadorService empleadorService;
 
 	@Autowired
 	private UserService userService;
@@ -63,10 +64,17 @@ public class CandidatoRegistroBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.ciudades = new ArrayList<Ciudad>();
-		candidato = new DatosCandidato();
-		LocalDate localDate = LocalDate.now();
-		candidato.setFechaNacimiento(localDate);
-		fechaNacimiento = localDate.toString();
+		empleador = new DatosEmpleador();
+		/*empleador.setRuc("0301584173001");
+		empleador.setNombreEmpresa("WEBMARKET");
+		empleador.setDireccionEmpresa("Vicente Rocafuerte y Miguel Heredia");
+		empleador.setEmailEmpresa("info@webmarket.ec");
+		empleador.setTelefonoEmpresa("072245422");
+		empleador.setNombreRepresentante("Luis Hernán");
+		empleador.setApellidoRepresentante("Quishpi Betún");
+		empleador.setTelefonoRepresentante("0987136318");
+		empleador.setEmailRepresentante("luis.quishpi@outlook.com");*/
+		
 		provincias = this.provinciaService.buscarTodo(new Provincia());
 		if (provincias.size() > 0) {
 			selectedProvincia = provincias.get(0);
@@ -83,18 +91,17 @@ public class CandidatoRegistroBean implements Serializable {
 			return;
 		}
 		LocalDate localDate = LocalDate.now();
-		candidato.setFechaRegistro(localDate);
-		candidato.setCiudad(selectedCiudad);
-		// localDate = LocalDate.parse(fechaNacimiento, formatter);
+		empleador.setFechaRegistro(localDate);
+		empleador.setCiudad(selectedCiudad);
 		User user = new User();
-		user.setUsername(candidato.getCedula());
+		user.setUsername(empleador.getRuc());
 		user.setPassword(password);
-		user.setRole("CANDIDATO");
+		user.setRole("EMPLEADOR");
 		user.setActive(true);
 		try {
 			if (userService.guardar(user) != null) {
-				candidato.setUser(user);
-				if (candidatoService.guardar(candidato) != null) {
+				empleador.setUser(user);
+				if (empleadorService.guardar(empleador) != null) {
 					resetEntity();
 					Mensajes.addMsg(MensajesTipo.INFORMACION, MensajeOk.GUARDADO_OK.toString());
 					Utils.redirectToPage(Constants.URI_WEB_SUCCESS);
@@ -111,9 +118,9 @@ public class CandidatoRegistroBean implements Serializable {
 	}
 
 	private void resetEntity() {
-		candidato = new DatosCandidato();
-		this.password = "";
-		this.repitePassword = "";
+		empleador=new DatosEmpleador();
+		this.password="";
+		this.repitePassword="";
 	}
 
 	public void onProvinciaChange() {

@@ -13,13 +13,16 @@
 		href="/resources/plugins-web/colorlib/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" />
 	<link rel="stylesheet"
 		href="/resources/plugins-web/colorlib/css/style.css" />
-	<link rel="stylesheet" href="/resources/plugins-web/css/webapp.css" />
+	<!--  <link rel="stylesheet"
+		href="/resources/plugins-web/css/webapp.css" />
+	 -->
 	<!-- <script src="/resources/adminlte-31/plugins/jquery/jquery.js"></script> -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </h:head>
 <h:body>
+	<h:outputStylesheet name="plugins-web/css/webapp.css" />
 	<div class="wrapper" style="background-color: #eee;">
 		<div class="inner">
 			<div class="image-holder">
@@ -36,36 +39,45 @@
 					autoUpdate="true" />
 				<h3>CANDIDATO - Registro</h3>
 				<div class="form-wrapper">
-					<h:outputLabel for="txtCedula" class="form-label"
+					<p:outputLabel for="txtCedula" class="form-label"
 						value="Cédula/Pasaporte" />
 					<p:inputText id="txtCedula" type="text" required="true"
-						requiredMessage="Ingrese Cédula/Pasaporte" value="#{candidatoRegistroBean.candidato.cedula}" />
+						requiredMessage="Ingrese Cédula/Pasaporte"
+						value="#{candidatoRegistroBean.candidato.cedula}" />
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Nombres</label>
-					<p:inputText type="text" required="true"
-						requiredMessage="Ingrese Nombres" value="#{candidatoRegistroBean.candidato.nombre}"/>
+					<p:outputLabel for="txtNombres" class="form-label" value="Nombres" />
+					<p:inputText id="txtNombres" type="text" required="true"
+						requiredMessage="Ingrese Nombres"
+						value="#{candidatoRegistroBean.candidato.nombre}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Apellidos</label>
-					<p:inputText type="text" required="true"
-						requiredMessage="Ingrese Apellidos" value="#{candidatoRegistroBean.candidato.apellido}"/>
+					<p:outputLabel for="txtApellidos" class="form-label"
+						value="Apellidos" />
+					<p:inputText id="txtApellidos" type="text" required="true"
+						requiredMessage="Ingrese Apellidos"
+						value="#{candidatoRegistroBean.candidato.apellido}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Fecha nacimiento</label> <br />
-					<p:datePicker monthNavigator="true"
+					<p:outputLabel for="txtFechaNacimiento" class="form-label"
+						value="Fecha nacimiento" />
+					<br />
+					<p:datePicker id="txtFechaNacimiento" monthNavigator="true"
 						yearNavigator="true" showWeek="true" required="true"
-						requiredMessage="Ingrese Fecha de nacimiento" 
-						pattern="yyyy-MM-dd"
-						value="#{candidatoRegistroBean.candidato.fechaNacimiento}"/>
+						requiredMessage="Ingrese Fecha de nacimiento" pattern="yyyy-MM-dd"
+						value="#{candidatoRegistroBean.candidato.fechaNacimiento}" />
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Email</label>
-					<p:inputText type="text" required="true"
-						requiredMessage="Ingrese Email" value="#{candidatoRegistroBean.candidato.email}"/>
+					<p:outputLabel for="txtEmail" class="form-label" value="Email" />
+					<p:inputText id="txtEmail" type="text" required="true"
+						requiredMessage="Ingrese Email"
+						value="#{candidatoRegistroBean.candidato.email}" />
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Residencia</label>
+					<p:outputLabel for="cmbProvincia" class="form-label"
+						value="Residencia" />
 					<p:selectOneMenu id="cmbProvincia" required="true"
 						requiredMessage="Provincia es obligatorio "
 						value="#{candidatoRegistroBean.selectedProvincia}"
@@ -92,28 +104,38 @@
 					</p:selectOneMenu>
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Contraseña</label>
-					<p:password feedback="true" promptLabel="Ingresa tu contraseña"
-						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte"
-						autocomplete="new-password" required="true"
-						requiredMessage="Ingrese Contraseña" 
-						value="#{candidatoRegistroBean.password}"
-						/>
+					<p:outputLabel for="txtContrasena" class="form-label"
+						value="Contraseña" />
+					<p:password id="txtContrasena" feedback="true"
+						promptLabel="Ingresa tu contraseña" weakLabel="Débil"
+						goodLabel="Buena" strongLabel="Fuerte" autocomplete="new-password"
+						required="true" requiredMessage="Ingrese Contraseña"
+						value="#{candidatoRegistroBean.password}" />
 					<small class="p-d-block">Use por lo menos una letra
 						mayúscula, una minúscula y un número</small>
 				</div>
 				<div class="form-wrapper">
-					<label class="form-label">Confirme Contraseña</label>
-					<p:password feedback="true" promptLabel="Repita contraseña"
-						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte"
-						autocomplete="new-password" required="true"
-						requiredMessage="Confirme Contraseña" />
+					<p:outputLabel for="txtConfContrasena" class="form-label"
+						value="Confirme Contraseña" />
+					<p:password id="txtConfContrasena" feedback="true"
+						promptLabel="Repita contraseña" weakLabel="Débil"
+						goodLabel="Buena" strongLabel="Fuerte" autocomplete="new-password"
+						required="true" requiredMessage="Confirme Contraseña"
+						value="#{candidatoRegistroBean.repitePassword}" />
 				</div>
-				<p:commandButton value="Registrar" ajax="true" update="frm"
-					onstart="PF('statusDialog').show()"
-					onsuccess="PF('statusDialog').hide()" 
-					actionListener="#{candidatoRegistroBean.guardar()}"/>
-
+				<div class="form-wrapper text-center">
+					<p:commandButton value="Registrar" ajax="true" update="frm"
+						onstart="PF('statusDialog').show()"
+						onsuccess="PF('statusDialog').hide()"
+						actionListener="#{candidatoRegistroBean.guardar()}" />
+				</div>
+				<br />
+				<div class="form-wrapper text-center">
+					<p>
+						Si ya tienes una cuenta puedes <a class="btn btn-light btn-sm"
+							href="../login.xhtml">Iniciar Sesión</a>
+					</p>
+				</div>
 			</h:form>
 		</div>
 	</div>

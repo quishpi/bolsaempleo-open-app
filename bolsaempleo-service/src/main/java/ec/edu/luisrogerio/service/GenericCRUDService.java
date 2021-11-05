@@ -5,9 +5,9 @@ import java.util.Optional;
 
 public interface GenericCRUDService<ENTITY, TYPE> {
 
-	public void guardar(ENTITY entity);
+	public ENTITY guardar(ENTITY entity);
 
-	public void actualizar(ENTITY entity);
+	public ENTITY actualizar(ENTITY entity);
 
 	//public void eliminar(ENTITY entity);
 

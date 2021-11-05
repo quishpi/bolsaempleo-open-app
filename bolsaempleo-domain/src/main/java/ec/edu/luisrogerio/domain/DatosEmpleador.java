@@ -2,19 +2,14 @@ package ec.edu.luisrogerio.domain;
 
 import java.time.LocalDate;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Type;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +19,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class DatosCandidato {
+public class DatosEmpleador {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,48 +27,42 @@ public class DatosCandidato {
 	private long id;
 
 	@OneToOne
-	// @MapsId
 	@JoinColumn(name = "user_id")
 	private User user;
 
 	@Column(nullable = false)
-	private String cedula;
+	private String ruc;
 
 	@Column(nullable = false)
-	private String nombre;
+	private String nombreEmpresa;
 
 	@Column(nullable = false)
-	private String apellido;
+	private String direccionEmpresa;
 
-	//@Basic(fetch = FetchType.LAZY)
-	@Lob
-	@Column( columnDefinition="LONGBLOB")
-	private byte[] foto;
+	@Column(nullable = false)
+	private String telefonoEmpresa;
+
+	@Column(nullable = false)
+	private String emailEmpresa;
 
 	@ManyToOne
 	@JoinColumn(name = "ciudad_id")
 	private Ciudad ciudad;
 
 	@Column
-	private String direccion;
-
-	@Column
-	private String telefono;
-
-	@Column
-	private String celular;
+	private byte[] logo;
 
 	@Column(nullable = false)
-	private String email;
+	private String nombreRepresentante;
+
+	@Column(nullable = false)
+	private String apellidoRepresentante;
 
 	@Column
-	private LocalDate fechaNacimiento;
+	private String telefonoRepresentante;
 
-	@Lob
-	@Column( columnDefinition="LONGBLOB")
-	private byte[] cvArchivo;
-
+	@Column(nullable = false)
+	private String emailRepresentante;
 	@Column
 	private LocalDate fechaRegistro;
-
 }

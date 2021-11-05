@@ -18,22 +18,22 @@ public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRU
 	private JpaRepository<ENTITY, Long> repository;
 
 	@Override
-	public void guardar(ENTITY entity) {
+	public ENTITY guardar(ENTITY entity) {
 		Optional<ENTITY> optional = buscar(entity);
 		if (optional.isPresent()) {
-			throw new AppException(String.format("Ya existe en la base de datos", entity));
+			throw new AppException(String.format("Datos ya registrados en el sistema", entity));
 		} else {
-			repository.save(entity);
+			return repository.save(entity);
 		}
 	}
 
 	@Override
-	public void actualizar(ENTITY entity) {
+	public ENTITY actualizar(ENTITY entity) {
 		Optional<ENTITY> optional = buscar(entity);
 		if (optional.isPresent()) {
-			repository.save(entity);
+			return repository.save(entity);
 		} else {
-			throw new AppException(String.format("No existe en la base de datos", entity));
+			throw new AppException(String.format("Registro no existe en la base de datos", entity));
 		}
 	}
 
@@ -52,7 +52,7 @@ public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRU
 		List<ENTITY> lstObjs = repository.findAll(Example.of(entity, matcher));
 		
 		if(lstObjs.isEmpty())
-			throw new AppException(String.format("No existe en la base de datos", entity));
+			throw new AppException(String.format("Registro no existe en la base de datos", entity));
 		return lstObjs;
 	}
 

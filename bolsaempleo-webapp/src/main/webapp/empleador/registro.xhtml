@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		href="/resources/plugins-web/colorlib/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" />
+	<link rel="stylesheet"
+		href="/resources/plugins-web/colorlib/css/style.css" />
+	<!--  <link rel="stylesheet"
+		href="/resources/plugins-web/css/webapp.css" />
+	 -->
+	<!-- <script src="/resources/adminlte-31/plugins/jquery/jquery.js"></script> -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</h:head>
+<h:body>
+	<h:outputStylesheet name="plugins-web/css/webapp.css" />
+	<div class="wrapper" style="background-color: #eee;">
+		<div class="inner">
+			<div class="image-holder">
+				<img
+					src="/resources/plugins-web/colorlib/images/luisrogerio_logo.jpg"
+					alt="" />
+			</div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:graphicImage url="/resources/images/loadingbar.gif" />
+			</p:dialog>
+			<h:form id="frm" update="growl">
+				<p:growl id="growl" sticky="false" life="5000" showDetail="false"
+					autoUpdate="true" />
+				<h3>EMPLEADOR - Registro</h3>
+				<h5>Datos de la empresa</h5>
+				<div class="form-wrapper">
+					<label class="form-label">RUC</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese RUC"
+						value="#{empleadorRegistroBean.empleador.ruc}" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Nombre</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese nombre de la empresa"
+						value="#{empleadorRegistroBean.empleador.nombreEmpresa}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Email</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese Email de la empresa"
+						value="#{empleadorRegistroBean.empleador.emailEmpresa}" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Teléfono</label> <br />
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese teléfono de la empresa"
+						value="#{empleadorRegistroBean.empleador.telefonoEmpresa}" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Dirección</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese dirección de la empresa"
+						value="#{empleadorRegistroBean.empleador.direccionEmpresa}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
+				</div>
+				<div class="form-wrapper">
+					<p:selectOneMenu id="cmbProvincia" required="true"
+						requiredMessage="Provincia es obligatorio "
+						value="#{empleadorRegistroBean.selectedProvincia}"
+						converter="entityConverter" style="width:100%;">
+						<f:selectItem itemLabel="Seleccione" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{empleadorRegistroBean.provincias}"
+							var="provincia" itemLabel="#{provincia.nombre}"
+							itemValue="#{provincia}" />
+						<p:ajax listener="#{empleadorRegistroBean.onProvinciaChange()}"
+							onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()" update="cmbCiudad" />
+					</p:selectOneMenu>
+
+					<p:selectOneMenu id="cmbCiudad" required="true"
+						requiredMessage="Ciudad es obligatorio "
+						value="#{empleadorRegistroBean.selectedCiudad}"
+						converter="entityConverter" style="width:100%;"
+						disabled="#{empleadorRegistroBean.selectedProvincia == null}">
+						<f:selectItem itemLabel="Seleccione" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{empleadorRegistroBean.ciudades}"
+							var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
+					</p:selectOneMenu>
+				</div>
+
+
+				<div class="form-wrapper">
+					<label class="form-label">Contraseña</label>
+					<p:password feedback="true" promptLabel="Ingresa tu contraseña"
+						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte"
+						autocomplete="new-password" required="true"
+						requiredMessage="Ingrese Contraseña"
+						value="#{empleadorRegistroBean.password}" />
+					<small class="p-d-block">Use por lo menos una letra
+						mayúscula, una minúscula y un número</small>
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Confirme Contraseña</label>
+					<p:password feedback="true" promptLabel="Repita contraseña"
+						weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte"
+						autocomplete="new-password" required="true"
+						requiredMessage="Confirme Contraseña"
+						value="#{empleadorRegistroBean.repitePassword}" />
+				</div>
+				<br />
+				<h5>Datos del administrador/representante</h5>
+				<div class="form-wrapper">
+					<label class="form-label">Nombres</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese nombres del administrador/representante"
+						value="#{empleadorRegistroBean.empleador.nombreRepresentante}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Apellidos</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese apellidos de administrador/representante"
+						value="#{empleadorRegistroBean.empleador.apellidoRepresentante}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Teléfono</label> <br />
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese teléfono del administrador/representante"
+						value="#{empleadorRegistroBean.empleador.telefonoRepresentante}" />
+				</div>
+				<div class="form-wrapper">
+					<label class="form-label">Email</label>
+					<p:inputText type="text" required="true"
+						requiredMessage="Ingrese Email del administrador/representante"
+						value="#{empleadorRegistroBean.empleador.emailRepresentante}" />
+				</div>
+
+				<div class="form-wrapper text-center">
+					<p:commandButton value="Registrar" ajax="true" update="frm"
+						onstart="PF('statusDialog').show()"
+						onsuccess="PF('statusDialog').hide()"
+						actionListener="#{empleadorRegistroBean.guardar()}" />
+				</div>
+				<br />
+				<div class="form-wrapper text-center">
+					<p>
+						Si ya tienes una cuenta puedes <a class="btn btn-light btn-sm"
+							href="../login.xhtml">Iniciar Sesión</a>
+					</p>
+				</div>
+			</h:form>
+		</div>
+	</div>
+
+</h:body>
+</html>
