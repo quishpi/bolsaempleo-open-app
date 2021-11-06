@@ -5,10 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import ec.edu.luisrogerio.domain.DatosCandidato;
+import ec.edu.luisrogerio.domain.DatosAdmin;
+
 
 @Repository
-public interface DatosCandidatoRepository extends JpaRepository<DatosCandidato, Long> {
+public interface DatosAdminRepository extends JpaRepository<DatosAdmin, Long> {
 	
-	Optional<DatosCandidato> findByCedula(String cedula);
+	Optional<DatosAdmin> findByCedula(String cedula);
 }

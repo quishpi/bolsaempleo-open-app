@@ -36,4 +36,12 @@ public class UserService extends GenericCRUDServiceImpl<User, Long> {
 		return entityRepository.findByUsername(entity.getUsername());
 	}
 
+	public Optional<User> buscarUsuarioAndPassword(User entity) {
+		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+		return entityRepository.findByUsernameAndPassword(entity.getUsername(), entity.getPassword());
+		/*
+		 * if (optional.isPresent()) { return optional; } else { throw new
+		 * AppException(String.format("Usuario no registrado en el sistema", entity)); }
+		 */
+	}
 }

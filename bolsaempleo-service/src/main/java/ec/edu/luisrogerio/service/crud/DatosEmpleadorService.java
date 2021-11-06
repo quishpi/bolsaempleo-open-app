@@ -20,4 +20,8 @@ public class DatosEmpleadorService extends GenericCRUDServiceImpl<DatosEmpleador
 		return entityRepository.findById(entity.getId());
 	}
 
+	public Optional<DatosEmpleador> buscarPorRuc(String ruc) {
+		return entityRepository.findByRuc(ruc);
+	}
+
 }

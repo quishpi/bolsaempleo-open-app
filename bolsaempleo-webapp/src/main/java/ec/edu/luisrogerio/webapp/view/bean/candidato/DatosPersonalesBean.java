@@ -28,6 +28,7 @@ import ec.edu.luisrogerio.webapp.utils.MensajeError;
 import ec.edu.luisrogerio.webapp.utils.MensajeOk;
 import ec.edu.luisrogerio.webapp.utils.Mensajes;
 import ec.edu.luisrogerio.webapp.utils.Utils;
+import ec.edu.luisrogerio.webapp.view.bean.LoginBean;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,6 +66,9 @@ public class DatosPersonalesBean implements Serializable {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	LoginBean loginBean;
 
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -72,10 +76,8 @@ public class DatosPersonalesBean implements Serializable {
 	public void init() {
 		this.ciudades = new ArrayList<Ciudad>();
 		provincias = this.provinciaService.buscarTodo(new Provincia());
-		DatosCandidato candidatoBuscar = new DatosCandidato();
-		candidatoBuscar.setId(1L);
 		Optional<DatosCandidato> candidatoOptional = Optional.empty();
-		candidatoOptional = candidatoService.buscar(candidatoBuscar);
+		candidatoOptional = candidatoService.buscarPorCedula(loginBean.getUsername());
 		if (!candidatoOptional.isPresent()) {
 			Utils.redirectToPage(Constants.URI_WEB_404);
 		}
@@ -102,10 +104,12 @@ public class DatosPersonalesBean implements Serializable {
 	public void guardar() {
 		byte[] fotoByte = null;
 		byte[] cvByte = null;
-		if (!foto.isEmpty() && foto != null)
-			fotoByte = Base64.getDecoder().decode(foto);
-		if (!cv.isEmpty() && cv != null)
-			cvByte = Base64.getDecoder().decode(cv);
+		if (foto != null)
+			if (!foto.isEmpty())
+				fotoByte = Base64.getDecoder().decode(foto);
+		if (cv != null)
+			if (!cv.isEmpty())
+				cvByte = Base64.getDecoder().decode(cv);
 
 		if (fotoByte != null)
 			candidato.setFoto(fotoByte);
@@ -134,8 +138,8 @@ public class DatosPersonalesBean implements Serializable {
 
 	public void changePic() {
 		foto = fotoTmp;
-		//if (foto.isEmpty() || foto == null)
-		//	foto = SINFOTO;
+		// if (foto.isEmpty() || foto == null)
+		// foto = SINFOTO;
 		// PrimeFaces.current().ajax().update("frm");
 	}
 

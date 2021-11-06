@@ -20,4 +20,8 @@ public class DatosCandidatoService extends GenericCRUDServiceImpl<DatosCandidato
 		return entityRepository.findById(entity.getId());
 	}
 
+	public Optional<DatosCandidato> buscarPorCedula(String cedula) {
+		return entityRepository.findByCedula(cedula);
+	}
+
 }

@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ec.edu.luisrogerio.common.enums.UserRole;
+import ec.edu.luisrogerio.domain.Authority;
 import ec.edu.luisrogerio.domain.Ciudad;
 import ec.edu.luisrogerio.domain.DatosEmpleador;
 import ec.edu.luisrogerio.domain.Provincia;
@@ -96,8 +100,13 @@ public class EmpleadorRegistroBean implements Serializable {
 		User user = new User();
 		user.setUsername(empleador.getRuc());
 		user.setPassword(password);
-		user.setRole("EMPLEADOR");
-		user.setActive(true);
+		user.setEnabled(true);
+		Authority aut = new Authority();
+		aut.setId(UserRole.ROLE_EMPLEADOR.getId());
+		aut.setAuthority(UserRole.ROLE_EMPLEADOR.toString());
+		Set<Authority> auts = new HashSet<Authority>();
+		auts.add(aut);
+		user.setAuthority(auts);
 		try {
 			if (userService.guardar(user) != null) {
 				empleador.setUser(user);

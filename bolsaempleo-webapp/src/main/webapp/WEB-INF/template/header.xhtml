@@ -25,15 +25,15 @@
 			<li class="nav-item dropdown"><a class="nav-link"
 				data-toggle="dropdown" href="#"> <img style="height: 30px;"
 					src="/resources/adminlte-31/dist/img/user2-160x160.jpg"
-					class="img-circle elevation-2" alt="User Image" /> Luis
-					(administrador)
+					class="img-circle elevation-2" alt="User Image" /> 
+					${loginBean.fullName} (${loginBean.roleName})
 			</a>
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 					<a onclick="PF('dlgCambiarClave').show()" class="dropdown-item">
 						<i class="fas fa-key mr-2"></i> Cambiar contraseña
 					</a>
 					<div class="dropdown-divider"></div>
-					<a href="cerrarsesion.xhtml" class="dropdown-item"> <i
+					<a href="/logout" class="dropdown-item"> <i
 						class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
 					</a>
 				</div></li>

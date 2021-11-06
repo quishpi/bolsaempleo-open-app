@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class DatosCandidato {
+public class DatosAdmin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,10 +65,7 @@ public class DatosCandidato {
 	@Column
 	private LocalDate fechaNacimiento;
 
-	@Lob
-	@Column(columnDefinition = "LONGBLOB")
-	private byte[] cvArchivo;
-
+	
 	@Column
 	private LocalDate fechaRegistro;
 
