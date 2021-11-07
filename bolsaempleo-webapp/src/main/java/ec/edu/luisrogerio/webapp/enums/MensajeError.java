@@ -1,4 +1,4 @@
-package ec.edu.luisrogerio.webapp.utils;
+package ec.edu.luisrogerio.webapp.enums;
 
 public enum MensajeError {
 	NO_GUARDADO("No se pudo guardar"), 

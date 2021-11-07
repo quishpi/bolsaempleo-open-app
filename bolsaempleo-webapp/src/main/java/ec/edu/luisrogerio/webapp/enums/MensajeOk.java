@@ -1,4 +1,4 @@
-package ec.edu.luisrogerio.webapp.utils;
+package ec.edu.luisrogerio.webapp.enums;
 
 public enum MensajeOk {
 	GUARDADO_OK("Guardado correctamente"), 

@@ -1,4 +1,4 @@
-package ec.edu.luisrogerio.domain;
+package ec.edu.luisrogerio.domain.candidato;
 
 import java.time.LocalDate;
 
@@ -8,10 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import ec.edu.luisrogerio.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +19,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class DatosAdmin {
+public class Experiencia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,45 +27,22 @@ public class DatosAdmin {
 	private long id;
 
 	@OneToOne
-	// @MapsId
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(nullable = false, unique = true)
-	private String cedula;
+	@Column(nullable = false)
+	private LocalDate fechaInicio;
 
 	@Column(nullable = false)
-	private String nombre;
+	private LocalDate fechaFin;
 
 	@Column(nullable = false)
-	private String apellido;
-
-	// @Basic(fetch = FetchType.LAZY)
-	@Lob
-	@Column(columnDefinition = "LONGBLOB")
-	private byte[] foto;
-
-	@ManyToOne
-	@JoinColumn(name = "ciudad_id")
-	private Ciudad ciudad;
-
-	@Column
-	private String direccion;
-
-	@Column
-	private String telefono;
-
-	@Column
-	private String celular;
+	private String puesto;
 
 	@Column(nullable = false)
-	private String email;
+	private String cargo;
 
-	@Column
-	private LocalDate fechaNacimiento;
-
-	
-	@Column
-	private LocalDate fechaRegistro;
+	@Column(nullable = false)
+	private String institucion;
 
 }

@@ -1,4 +1,4 @@
-package ec.edu.luisrogerio.domain;
+package ec.edu.luisrogerio.domain.candidato;
 
 import java.time.LocalDate;
 
@@ -12,6 +12,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import ec.edu.luisrogerio.domain.Ciudad;
+import ec.edu.luisrogerio.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

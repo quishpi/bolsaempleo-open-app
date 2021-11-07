@@ -16,52 +16,56 @@
 			<p:growl id="growl" sticky="false" life="5000" showDetail="false"
 				autoUpdate="true" />
 			<div class="col-lg-6 col-md-12 col-sm-12 position-relative mb-4">
-				<div class="form-wrapper">
+				<div class="p-field">
 					<label class="form-label">Cédula/Pasaporte</label> <br /> <label>
 						#{datosPersonalesBean.candidato.cedula} </label>
 				</div>
-				<div class="form-wrapper">
-					<p:outputLabel for="txtNombre" value="Nombres" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="txtNombre" value="Nombres" class="form-label" />
 					<p:inputText id="txtNombre" type="text" required="true"
 						requiredMessage="Ingrese Nombres"
 						value="#{datosPersonalesBean.candidato.nombre}"
 						style="text-transform: uppercase" converter="toUpperCaseConverter" />
 				</div>
-				<div class="form-wrapper">
-					<p:outputLabel for="txtApellidos" value="Apellidos" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="txtApellidos" value="Apellidos"
+						class="form-label" />
 					<p:inputText id="txtApellidos" type="text" required="true"
 						requiredMessage="Ingrese Apellidos"
 						value="#{datosPersonalesBean.candidato.apellido}"
 						style="text-transform: uppercase" converter="toUpperCaseConverter" />
 				</div>
-				<div class="form-wrapper">
-					<p:outputLabel for="txtFecNacimiento" value="Fecha nacimiento" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="txtFecNacimiento" value="Fecha nacimiento"
+						class="form-label" />
 					<p:datePicker id="txtFecNacimiento" monthNavigator="true"
 						yearNavigator="true" showWeek="true" required="true"
 						requiredMessage="Ingrese Fecha de nacimiento" pattern="yyyy-MM-dd"
 						value="#{datosPersonalesBean.candidato.fechaNacimiento}"
 						converterMessage="Formato debe ser: aaaa-MM-dd" />
 				</div>
-				<div class="form-wrapper">
-					<p:outputLabel for="txtEmail" value="Email" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="txtEmail" value="Email" class="form-label" />
 					<p:inputText id="txtEmail" type="text" required="true"
 						requiredMessage="Ingrese Email"
 						value="#{datosPersonalesBean.candidato.email}" />
 				</div>
-				<div class="form-wrapper">
-					<p:outputLabel for="txtTelefono" value="Teléfono convencional" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="txtTelefono" value="Teléfono convencional"
+						class="form-label" />
 					<p:inputText id="txtTelefono" type="text"
 						value="#{datosPersonalesBean.candidato.telefono}" />
 				</div>
-				<div class="form-wrapper">
-					<p:outputLabel for="txtTCelular" value="Celular" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="txtTCelular" value="Celular" class="form-label" />
 					<p:inputText id="txtTCelular" type="text" required="true"
 						requiredMessage="Ingrese Celular"
 						value="#{datosPersonalesBean.candidato.celular}" />
 				</div>
 
-				<div class="form-wrapper">
-					<p:outputLabel for="cmbProvincia" value="Residencia" class="form-label"/>
+				<div class="p-field">
+					<p:outputLabel for="cmbProvincia" value="Residencia"
+						class="form-label" />
 					<p:selectOneMenu id="cmbProvincia" required="true"
 						requiredMessage="Provincia es obligatorio "
 						value="#{datosPersonalesBean.selectedProvincia}"
@@ -87,7 +91,7 @@
 							var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
 					</p:selectOneMenu>
 				</div>
-				<div class="form-wrapper">
+				<div class="p-field">
 					<p:panel id="pnlFoto" header="Foto">
 						<p:commandButton value="Subir foto" type="button"
 							icon="pi pi-external-link" onclick="PF('dlgFoto').show()" />
@@ -99,7 +103,7 @@
 					</p:panel>
 				</div>
 
-				<div class="form-wrapper">
+				<div class="p-field">
 					<p:panel id="pnlCv" header="Hoja de vida (formato socioempleo)">
 						<p:commandButton value="Subir CV" type="button"
 							icon="pi pi-external-link" onclick="PF('dlgCv').show()" />
@@ -111,9 +115,9 @@
 					</p:outputLabel>
 					</p:panel>
 				</div>
-				<div class="form-wrapper" style="text-align: center;"></div>
+				<div class="p-field" style="text-align: center;"></div>
 				<br /> <br />
-				<div class="form-wrapper text-center">
+				<div class="p-field text-center">
 					<p:commandButton value="Actualizar" ajax="true" update="frm"
 						onstart="PF('statusDialog').show()"
 						onsuccess="PF('statusDialog').hide()"

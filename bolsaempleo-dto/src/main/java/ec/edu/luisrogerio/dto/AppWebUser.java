@@ -14,13 +14,15 @@ public class AppWebUser extends User {
 
 	private static final long serialVersionUID = 1L;
 
+	private final Long id;
 	private final String fullName;
 
 	public AppWebUser(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities,
-			String fullName) {
+			Long id, String fullName) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
+		this.id = id;
 		this.fullName = fullName;
 
 	}

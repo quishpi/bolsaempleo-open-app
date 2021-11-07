@@ -37,24 +37,24 @@ public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRU
 		}
 	}
 
-	/*
-	 * @Override public void eliminar(ENTITY dtoObject) { Optional<ENTITY> optional
-	 * = buscar(dtoObject); if (optional.isPresent()) {
-	 * repository.delete(dtoObject); } else { throw new
-	 * AppException(String.format("El objeto %s no existe en base de datos",
-	 * dtoObject)); } }
-	 */
+	@Override
+	public void eliminar(ENTITY dtoObject) {
+		Optional<ENTITY> optional = buscar(dtoObject);
+		if (optional.isPresent()) {
+			repository.delete(dtoObject);
+		} else {
+			throw new AppException(String.format("El objeto %s no existe en base de datos", dtoObject));
+		}
+	}
+
 	@Override
 	public List<ENTITY> buscarTodo(ENTITY entity) {
-		ExampleMatcher matcher = ExampleMatcher.matching()
-				.withIgnoreNullValues()
-				.withIgnorePaths("id");
+		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths("id");
 		List<ENTITY> lstObjs = repository.findAll(Example.of(entity, matcher));
-		
-		if(lstObjs.isEmpty())
+
+		if (lstObjs.isEmpty())
 			throw new AppException(String.format("Registro no existe en la base de datos", entity));
 		return lstObjs;
 	}
 
-	
 }

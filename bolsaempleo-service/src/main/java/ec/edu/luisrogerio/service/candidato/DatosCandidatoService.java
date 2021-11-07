@@ -1,12 +1,12 @@
-package ec.edu.luisrogerio.service.crud;
+package ec.edu.luisrogerio.service.candidato;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ec.edu.luisrogerio.domain.DatosCandidato;
-import ec.edu.luisrogerio.persistence.DatosCandidatoRepository;
+import ec.edu.luisrogerio.domain.candidato.DatosCandidato;
+import ec.edu.luisrogerio.persistence.candidato.DatosCandidatoRepository;
 import ec.edu.luisrogerio.service.GenericCRUDServiceImpl;
 
 @Service

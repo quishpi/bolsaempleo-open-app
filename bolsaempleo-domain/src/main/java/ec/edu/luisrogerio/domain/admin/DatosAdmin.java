@@ -1,4 +1,4 @@
-package ec.edu.luisrogerio.domain;
+package ec.edu.luisrogerio.domain.admin;
 
 import java.time.LocalDate;
 
@@ -8,9 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import ec.edu.luisrogerio.domain.Ciudad;
+import ec.edu.luisrogerio.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +22,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class DatosEmpleador {
+public class DatosAdmin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,42 +30,45 @@ public class DatosEmpleador {
 	private long id;
 
 	@OneToOne
+	// @MapsId
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(nullable = false)
-	private String ruc;
+	@Column(nullable = false, unique = true)
+	private String cedula;
 
 	@Column(nullable = false)
-	private String nombreEmpresa;
+	private String nombre;
 
 	@Column(nullable = false)
-	private String direccionEmpresa;
+	private String apellido;
 
-	@Column(nullable = false)
-	private String telefonoEmpresa;
-
-	@Column(nullable = false)
-	private String emailEmpresa;
+	// @Basic(fetch = FetchType.LAZY)
+	@Lob
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] foto;
 
 	@ManyToOne
 	@JoinColumn(name = "ciudad_id")
 	private Ciudad ciudad;
 
 	@Column
-	private byte[] logo;
-
-	@Column(nullable = false)
-	private String nombreRepresentante;
-
-	@Column(nullable = false)
-	private String apellidoRepresentante;
+	private String direccion;
 
 	@Column
-	private String telefonoRepresentante;
+	private String telefono;
+
+	@Column
+	private String celular;
 
 	@Column(nullable = false)
-	private String emailRepresentante;
+	private String email;
+
+	@Column
+	private LocalDate fechaNacimiento;
+
+	
 	@Column
 	private LocalDate fechaRegistro;
+
 }

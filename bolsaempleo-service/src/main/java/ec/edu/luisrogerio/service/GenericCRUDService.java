@@ -9,7 +9,7 @@ public interface GenericCRUDService<ENTITY, TYPE> {
 
 	public ENTITY actualizar(ENTITY entity);
 
-	//public void eliminar(ENTITY entity);
+	public void eliminar(ENTITY entity);
 
 	public List<ENTITY> buscarTodo(ENTITY entity);
 

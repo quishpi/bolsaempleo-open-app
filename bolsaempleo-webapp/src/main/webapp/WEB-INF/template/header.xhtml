@@ -80,6 +80,7 @@
 			<f:facet name="footer">
 				<p:commandButton value="Aceptar" icon="pi pi-check"
 					actionListener="#{cambiarClaveBean.changePassword()}"
+					update="growl"
 					process="@this txtPasswordActual txtPassword txtPasswordRepite" />
 
 				<p:commandButton value="Cancelar" icon="pi pi-times"

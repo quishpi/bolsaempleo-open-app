@@ -16,16 +16,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ec.edu.luisrogerio.domain.Ciudad;
-import ec.edu.luisrogerio.domain.DatosCandidato;
 import ec.edu.luisrogerio.domain.Provincia;
+import ec.edu.luisrogerio.domain.candidato.DatosCandidato;
+import ec.edu.luisrogerio.service.candidato.DatosCandidatoService;
 import ec.edu.luisrogerio.service.crud.CiudadService;
-import ec.edu.luisrogerio.service.crud.DatosCandidatoService;
 import ec.edu.luisrogerio.service.crud.ProvinciaService;
 import ec.edu.luisrogerio.service.crud.UserService;
+import ec.edu.luisrogerio.webapp.enums.MensajeError;
+import ec.edu.luisrogerio.webapp.enums.MensajeOk;
 import ec.edu.luisrogerio.webapp.enums.MensajesTipo;
 import ec.edu.luisrogerio.webapp.utils.Constants;
-import ec.edu.luisrogerio.webapp.utils.MensajeError;
-import ec.edu.luisrogerio.webapp.utils.MensajeOk;
 import ec.edu.luisrogerio.webapp.utils.Mensajes;
 import ec.edu.luisrogerio.webapp.utils.Utils;
 import ec.edu.luisrogerio.webapp.view.bean.LoginBean;
@@ -77,7 +77,7 @@ public class DatosPersonalesBean implements Serializable {
 		this.ciudades = new ArrayList<Ciudad>();
 		provincias = this.provinciaService.buscarTodo(new Provincia());
 		Optional<DatosCandidato> candidatoOptional = Optional.empty();
-		candidatoOptional = candidatoService.buscarPorCedula(loginBean.getUsername());
+		candidatoOptional = candidatoService.buscarPorCedula(loginBean.getUser().getUsername());
 		if (!candidatoOptional.isPresent()) {
 			Utils.redirectToPage(Constants.URI_WEB_404);
 		}

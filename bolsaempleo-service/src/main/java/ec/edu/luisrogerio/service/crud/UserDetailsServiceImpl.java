@@ -14,11 +14,14 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.luisrogerio.common.enums.UserRole;
 import ec.edu.luisrogerio.domain.Authority;
-import ec.edu.luisrogerio.domain.DatosAdmin;
-import ec.edu.luisrogerio.domain.DatosCandidato;
-import ec.edu.luisrogerio.domain.DatosEmpleador;
+import ec.edu.luisrogerio.domain.admin.DatosAdmin;
+import ec.edu.luisrogerio.domain.candidato.DatosCandidato;
+import ec.edu.luisrogerio.domain.empleador.DatosEmpleador;
 import ec.edu.luisrogerio.dto.AppWebUser;
 import ec.edu.luisrogerio.persistence.UserRepository;
+import ec.edu.luisrogerio.service.admin.DatosAdminService;
+import ec.edu.luisrogerio.service.candidato.DatosCandidatoService;
+import ec.edu.luisrogerio.service.empleador.DatosEmpleadorService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -42,7 +45,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		ec.edu.luisrogerio.domain.User appUser = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
-
 		List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
 		for (Authority authority : appUser.getAuthority()) {
 			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority.getAuthority());
@@ -57,27 +59,27 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			authority = grantList.get(0).getAuthority();
 		}
 
-		String nombreCompleto = null;
+		String fullname = null;
 		if (authority.equals(UserRole.ROLE_CANDIDATO.toString())) {
 			Optional<DatosCandidato> candidatoOptional = candidatoService.buscarPorCedula(username);
 			if (candidatoOptional.isPresent()) {
-				nombreCompleto = candidatoOptional.get().getNombre() + " " + candidatoOptional.get().getApellido();
+				fullname = candidatoOptional.get().getNombre() + " " + candidatoOptional.get().getApellido();
 			}
 		} else if (authority.equals(UserRole.ROLE_EMPLEADOR.toString())) {
 			Optional<DatosEmpleador> empleadorOptional = empleadorService.buscarPorRuc(username);
 			if (empleadorOptional.isPresent()) {
-				nombreCompleto = empleadorOptional.get().getNombreEmpresa();
+				fullname = empleadorOptional.get().getNombreEmpresa();
 			}
 
 		} else if (authority.equals(UserRole.ROLE_ADMIN.toString())) {
 			Optional<DatosAdmin> adminOptional = adminService.buscarPorCedula(username);
 			if (adminOptional.isPresent()) {
-				nombreCompleto = adminOptional.get().getNombre() + " " + adminOptional.get().getApellido();
+				fullname = adminOptional.get().getNombre() + " " + adminOptional.get().getApellido();
 			}
 
 		}
 		appWebUser = new AppWebUser(appUser.getUsername(), appUser.getPassword(), appUser.isEnabled(), true, true, true,
-				grantList, nombreCompleto);
+				grantList, appUser.getId(), fullname);
 		return appWebUser;
 	}
 }
