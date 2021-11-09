@@ -2,42 +2,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head></h:head>
+<h:head>
+<style>
+	
+</style>
+</h:head>
 <h:body>
-
-	<li class="nav-item"><a href="#" class="nav-link"> <i
-			class="nav-icon fas fa-table"></i>
-			<p>
-				Candidato <i class="fas fa-angle-left right"></i>
-			</p>
-	</a>
-		<ul class="nav nav-treeview">
-			<li class="nav-item"><a href="datospersonales.xhtml" class="nav-link"> <i
-					class="far fa-circle nav-icon"></i>
-					<p>Datos personales</p>
-			</a></li>
-			<li class="nav-item"><a href="experiencia.xhtml" class="nav-link"> <i
-					class="far fa-circle nav-icon"></i>
-					<p>Experiencia</p>
-			</a></li>
-			<li class="nav-item"><a href="capacitacion.xhtml" class="nav-link"> <i
-					class="far fa-circle nav-icon"></i>
-					<p>Capacitación</p>
-			</a></li>
-			<li class="nav-item"><a href="instruccion.xhtml" class="nav-link"> <i
-					class="far fa-circle nav-icon"></i>
-					<p>Instrucción formal</p>
-			</a></li>
-			<li class="nav-item"><a href="referenciapersonal.xhtml" class="nav-link"> <i
-					class="far fa-circle nav-icon"></i>
-					<p>Referencia personal</p>
-			</a></li>
-			<li class="nav-item"><a href="referenciaprofesional.xhtml" class="nav-link"> <i
-					class="far fa-circle nav-icon"></i>
-					<p>Referencia profesional</p>
-			</a></li>
-		</ul></li>
+	
+		<li class="nav-item"><a href="#" class="nav-link"> <i
+				class="nav-icon fas fa-table"></i>
+				<p>
+					Candidato <i class="fas fa-angle-left right"></i>
+				</p>
+		</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item"><a href="datospersonales.xhtml" 
+					class="nav-link"> <i class="fas fa-id-badge nav-icon"></i>
+						<p>Datos personales</p>
+				</a></li>
+				<li class="nav-item"><a href="experiencia.xhtml"
+					class="nav-link"> <i class="fas fa-briefcase nav-icon"></i>
+						<p>Experiencia</p>
+				</a></li>
+				<li class="nav-item"><a href="capacitacion.xhtml"
+					class="nav-link"> <i class="fas fa-book-reader nav-icon"></i>
+						<p>Capacitación</p>
+				</a></li>
+				<li class="nav-item"><a href="instruccion.xhtml"
+					class="nav-link"> <i class="fas fa-graduation-cap nav-icon"></i>
+						<p>Instrucción formal</p>
+				</a></li>
+				<li class="nav-item"><a href="referenciapersonal.xhtml"
+					class="nav-link"> <i class="fas fa-hands-helping nav-icon"></i>
+						<p>Referencia personal</p>
+				</a></li>
+				<li class="nav-item"><a href="referenciaprofesional.xhtml"
+					class="nav-link"> <i class="fas fa-handshake nav-icon"></i>
+						<p>Referencia profesional</p>
+				</a></li>
+			</ul></li>
+		<li class="nav-header">
+			<a class="brand-link" style="padding: 0;"></a>
+		</li>
+		<li class="nav-item">
+		<h:form>
+			<p:commandLink class="nav-link" 
+				onmouseover="this.style.color='#ffffff';"
+				onmouseout="this.style.color='';"
+				action="#{cvBean.openPdf()}" 
+				ajax="false">
+				<i class="nav-icon fas fa-file-pdf"></i>
+				<p>Descargar CV</p>
+			</p:commandLink>
+			</h:form>
+		</li>
+		<li class="nav-header">
+			<a class="brand-link" style="padding: 0;"></a>
+		</li>
+	
 </h:body>
 </html>

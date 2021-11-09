@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cv" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bae8b4f-3554-4508-a4bd-2cd3c24c8894">
+	<parameter name="experiencias" class="java.util.List"/>
+	<parameter name="sbrInstruccion" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="sbrExperiencia" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="instrucciones" class="java.util.List"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="106" backcolor="#336699" uuid="7a472c07-113f-4312-911c-6fbb36730388"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="20" y="20" width="310" height="30" forecolor="#FFFFFF" uuid="09227014-72f2-4fff-b11b-437af60cdbd9"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="50" width="310" height="50" forecolor="#FFFFFF" uuid="11953f81-31c7-469d-ae72-43ac81330866"/>
+				<textElement>
+					<font size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="258" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="50" uuid="0219122b-5e07-4c14-bbde-4fe06b7d4bba"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{experiencias})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{sbrExperiencia}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="60" width="555" height="50" uuid="e30f42c4-6216-4dae-81da-ddd4236f46bc"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{instrucciones})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{sbrInstruccion}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

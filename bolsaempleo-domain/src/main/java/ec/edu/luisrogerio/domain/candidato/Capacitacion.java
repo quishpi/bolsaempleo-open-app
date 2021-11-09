@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class Experiencia {
+public class Capacitacion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +34,15 @@ public class Experiencia {
 	private LocalDate fechaInicio;
 
 	@Column(nullable = false)
-	private String fechaFin;
+	private LocalDate fechaFin;
 
 	@Column(nullable = false)
-	private String puesto;
-
-	@Column(nullable = false)
-	private String cargo;
+	private String tema;
 
 	@Column(nullable = false)
 	private String institucion;
+
+	@Column(nullable = false)
+	private Double horas;
 
 }

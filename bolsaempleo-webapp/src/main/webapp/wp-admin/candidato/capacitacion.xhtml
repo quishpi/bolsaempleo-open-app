@@ -7,7 +7,7 @@
 
 <ui:composition template="/WEB-INF/template/layout.xhtml">
 
-	<ui:define name="title">Experiencia</ui:define>
+	<ui:define name="title">Capacitación</ui:define>
 	<ui:define name="content">
 		<h:form id="frm" update="growl">
 			<p:growl id="growl" sticky="false" life="5000" showDetail="false"
@@ -19,18 +19,18 @@
 					<p:toolbar>
 						<p:toolbarGroup>
 							<p:commandButton value="Agregar" icon="pi pi-plus"
-								actionListener="#{experienciaBean.openNew}"
+								actionListener="#{capacitacionBean.openNew}"
 								update=":frm:manage-element-content"
 								oncomplete="PF('manageElementDialog').show()" process="@this"
 								styleClass="ui-button-success" style="margin-right: .5rem">
 								<p:resetInput target=":frm:manage-element-content" />
 							</p:commandButton>
 							<p:commandButton id="delete-elements-button"
-								value="#{experienciaBean.deleteButtonMessage}"
+								value="#{capacitacionBean.deleteButtonMessage}"
 								icon="pi pi-trash"
-								actionListener="#{experienciaBean.deleteSelectedElements}"
+								actionListener="#{capacitacionBean.deleteSelectedElements}"
 								styleClass="ui-button-danger"
-								disabled="#{!experienciaBean.hasSelectedElements()}"
+								disabled="#{!capacitacionBean.hasSelectedElements()}"
 								update="@this">
 								<p:confirm header="Confirmación"
 									message="Eliminar registros seleccionados?"
@@ -40,9 +40,9 @@
 					</p:toolbar>
 
 					<p:dataTable id="dt-elements" widgetVar="dtElementos" var="element"
-						value="#{experienciaBean.elements}" reflow="true"
+						value="#{capacitacionBean.elements}" reflow="true"
 						styleClass="elements-table"
-						selection="#{experienciaBean.selectedElements}"
+						selection="#{capacitacionBean.selectedElements}"
 						rowKey="#{element.id}" paginator="true" rows="10"
 						rowSelectMode="add" paginatorPosition="bottom"
 						emptyMessage="No se encontraron registros">
@@ -64,11 +64,11 @@
 						<p:column headerText="Institución" sortBy="#{element.institucion}">
 							<h:outputText value="#{element.institucion}" />
 						</p:column>
-						<p:column headerText="Puesto" sortBy="#{element.puesto}">
-							<h:outputText value="#{element.puesto}" />
+						<p:column headerText="Tema" sortBy="#{element.tema}">
+							<h:outputText value="#{element.tema}" />
 						</p:column>
-						<p:column headerText="Cargo" sortBy="#{element.cargo}">
-							<h:outputText value="#{element.cargo}" />
+						<p:column headerText="Horas" sortBy="#{element.horas}">
+							<h:outputText value="#{element.horas}" />
 						</p:column>
 						<p:column headerText="Fecha inicio"
 							sortBy="#{element.fechaInicio}">
@@ -83,85 +83,76 @@
 								update=":frm:manage-element-content"
 								oncomplete="PF('manageElementDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"
-								process="@this"
-								action="#{experienciaBean.loadDialog}">
+								process="@this">
 								<f:setPropertyActionListener value="#{element}"
-									target="#{experienciaBean.selectedElement}" />
+									target="#{capacitacionBean.selectedElement}" />
 								<p:resetInput target=":frm:manage-element-content" />
 							</p:commandButton>
 							<p:commandButton class="ui-button-warning rounded-button"
 								icon="pi pi-trash" process="@this"
 								oncomplete="PF('deleteElementDialog').show()">
 								<f:setPropertyActionListener value="#{element}"
-									target="#{experienciaBean.selectedElement}" />
+									target="#{capacitacionBean.selectedElement}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 
-					<p:dialog header="Experiencia" showEffect="fade" modal="true"
+					<p:dialog header="Capacitación" showEffect="fade" modal="true"
 						widgetVar="manageElementDialog" responsive="true">
 						<p:outputPanel id="manage-element-content" class="ui-fluid">
 							<p:outputPanel
-								rendered="#{not empty experienciaBean.selectedElement}">
+								rendered="#{not empty capacitacionBean.selectedElement}">
 								<div class="p-field">
 									<p:outputLabel for="institucion" class="form-label"
 										value="Institución" />
 									<p:inputText id="institucion"
-										value="#{experienciaBean.selectedElement.institucion}"
+										value="#{capacitacionBean.selectedElement.institucion}"
 										required="true"
 										requiredMessage="Ingrese nombre de institución" />
 								</div>
 								<div class="p-field">
-									<p:outputLabel for="puesto" class="form-label" value="Puesto" />
-									<p:inputText id="puesto"
-										value="#{experienciaBean.selectedElement.puesto}"
-										required="true" requiredMessage="Ingrese puesto" />
+									<p:outputLabel for="tema" class="form-label" value="Tema" />
+									<p:inputText id="tema"
+										value="#{capacitacionBean.selectedElement.tema}"
+										required="true" requiredMessage="Ingrese tema" />
 								</div>
 								<div class="p-field">
-									<p:outputLabel for="cargo" class="form-label" value="Cargo" />
-									<p:inputText id="cargo"
-										value="#{experienciaBean.selectedElement.cargo}"
-										required="true" requiredMessage="Ingrese cargo" />
+									<p:outputLabel for="horas" class="form-label" value="Horas" />
+									<p:inputNumber id="horas"
+										value="#{capacitacionBean.selectedElement.horas}"
+										required="true" requiredMessage="Ingrese horas"
+										minValue="1" 
+										decimalPlaces="2"
+										/>
 								</div>
 								<div class="p-field">
 									<p:outputLabel for="fechaInicio" class="form-label"
 										value="Fecha de inicio" />
 									<p:datePicker id="fechaInicio" monthNavigator="true"
 										yearNavigator="true" showWeek="true" required="true"
-										requiredMessage="Ingrese Fecha de inicio" pattern="yyyy-MM-dd"
-										value="#{experienciaBean.selectedElement.fechaInicio}"
+										requiredMessage="Ingrese Fecha de nacimiento"
+										pattern="yyyy-MM-dd"
+										value="#{capacitacionBean.selectedElement.fechaInicio}"
 										converterMessage="Formato debe ser: aaaa-MM-dd"
 										placeholder="aaaa-mm-dd" />
 								</div>
-
 								<div class="p-field">
-									<br />
-									<p:selectBooleanCheckbox
-										value="#{experienciaBean.trabajaActualmente}"
-										itemLabel="Trabaja actualmente">
-										<p:ajax update="cambio" />
-									</p:selectBooleanCheckbox>
+									<p:outputLabel for="fechaFin" class="form-label"
+										value="Fecha fin" />
+									<p:datePicker id="fechaFin" monthNavigator="true"
+										yearNavigator="true" showWeek="true" required="true"
+										requiredMessage="Ingrese Fecha de nacimiento"
+										pattern="yyyy-MM-dd"
+										value="#{capacitacionBean.selectedElement.fechaFin}"
+										converterMessage="Formato debe ser: aaaa-MM-dd"
+										placeholder="aaaa-mm-dd" />
 								</div>
-								<p:outputPanel id="cambio">
-									<div class="p-field">
-										<p:outputLabel for="fechaFin" class="form-label"
-											value="Fecha fin"
-											rendered="#{!experienciaBean.trabajaActualmente}" />
-										<p:datePicker id="fechaFin" monthNavigator="true"
-											yearNavigator="true" showWeek="true" required="true"
-											requiredMessage="Ingrese Fecha fin" pattern="yyyy-MM-dd"
-											value="#{experienciaBean.fechaFin}"
-											converterMessage="Formato debe ser: aaaa-MM-dd"
-											placeholder="aaaa-mm-dd"
-											rendered="#{!experienciaBean.trabajaActualmente}" />
-									</div>
-								</p:outputPanel>
 							</p:outputPanel>
 						</p:outputPanel>
 
 						<f:facet name="footer">
 							<p:commandButton value="Guardar" icon="pi pi-check"
-								actionListener="#{experienciaBean.saveElement}"
+								actionListener="#{capacitacionBean.saveElement}"
 								update="manage-element-content growl"
 								process="manage-element-content @this" />
 							<p:commandButton value="Cancelar" icon="pi pi-times"
@@ -175,7 +166,7 @@
 						width="300" message="Eliminar registro seleccionado?"
 						header="Confirmar" severity="warn">
 						<p:commandButton value="Si" icon="pi pi-check"
-							actionListener="#{experienciaBean.deleteElement}" process="@this"
+							actionListener="#{capacitacionBean.deleteElement}" process="@this"
 							oncomplete="PF('deleteElementDialog').hide()" />
 						<p:commandButton value="No" type="button"
 							styleClass="ui-button-secondary" icon="pi pi-times"

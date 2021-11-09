@@ -1,7 +1,5 @@
 package ec.edu.luisrogerio.domain.candidato;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class Experiencia {
+public class ReferenciaPersonal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,18 +29,12 @@ public class Experiencia {
 	private User user;
 
 	@Column(nullable = false)
-	private LocalDate fechaInicio;
+	private String nombre;
 
 	@Column(nullable = false)
-	private String fechaFin;
+	private String telefono;
 
 	@Column(nullable = false)
-	private String puesto;
-
-	@Column(nullable = false)
-	private String cargo;
-
-	@Column(nullable = false)
-	private String institucion;
+	private String email;
 
 }

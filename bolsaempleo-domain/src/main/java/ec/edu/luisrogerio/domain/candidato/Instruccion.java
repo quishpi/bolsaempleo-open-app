@@ -1,7 +1,5 @@
 package ec.edu.luisrogerio.domain.candidato;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import ec.edu.luisrogerio.domain.NivelInstruccion;
 import ec.edu.luisrogerio.domain.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class Experiencia {
+public class Instruccion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,19 +29,17 @@ public class Experiencia {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(nullable = false)
-	private LocalDate fechaInicio;
-
-	@Column(nullable = false)
-	private String fechaFin;
-
-	@Column(nullable = false)
-	private String puesto;
-
-	@Column(nullable = false)
-	private String cargo;
+	@OneToOne
+	@JoinColumn(name = "nivelInstruccion_id")
+	private NivelInstruccion nivelInstruccion;
 
 	@Column(nullable = false)
 	private String institucion;
+
+	@Column(nullable = false)
+	private String titulo;
+
+	@Column(nullable = false)
+	private String numeroRegistro;
 
 }

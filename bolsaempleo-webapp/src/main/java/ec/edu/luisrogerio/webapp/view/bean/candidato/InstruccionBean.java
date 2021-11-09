@@ -1,7 +1,6 @@
 package ec.edu.luisrogerio.webapp.view.bean.candidato;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ec.edu.luisrogerio.domain.NivelInstruccion;
 import ec.edu.luisrogerio.domain.User;
-import ec.edu.luisrogerio.domain.candidato.Experiencia;
-import ec.edu.luisrogerio.service.candidato.ExperienciaService;
+import ec.edu.luisrogerio.domain.candidato.Instruccion;
+import ec.edu.luisrogerio.service.candidato.InstruccionService;
+import ec.edu.luisrogerio.service.crud.NivelInstruccionService;
 import ec.edu.luisrogerio.webapp.enums.MensajesTipo;
 import ec.edu.luisrogerio.webapp.utils.Mensajes;
 import ec.edu.luisrogerio.webapp.view.bean.LoginBean;
@@ -24,44 +25,37 @@ import lombok.Setter;
 @Setter
 @Component
 @Scope("view")
-public class ExperienciaBean implements Serializable {
+public class InstruccionBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String HASTAACTUALIDAD = "Hasta la actualidad";
-
-	private List<Experiencia> elements;
-	private Experiencia selectedElement;
-	private List<Experiencia> selectedElements;
-	private boolean trabajaActualmente;
-	private LocalDate fechaFin;
-
+	private List<Instruccion> elements;
+	private Instruccion selectedElement;
+	private List<Instruccion> selectedElements;
+	private List<NivelInstruccion> niveles;
+	private NivelInstruccion selectedNivel;
+	
 	private User user;
 
 	@Autowired
 	private LoginBean loginBean;
 	@Autowired
-	private ExperienciaService entityService;
+	private InstruccionService entityService;
+	@Autowired
+	private NivelInstruccionService nivelInstruccionService;
 
 	@PostConstruct
 	public void init() {
-		this.trabajaActualmente = false;
 		this.user = loginBean.getUser();
 		this.elements = entityService.buscarPorUsuario(user);
+		niveles=nivelInstruccionService.buscarTodo(new NivelInstruccion());
 	}
 
 	public void openNew() {
-		this.selectedElement = new Experiencia();
-		this.fechaFin=null;
-		this.trabajaActualmente = false;
+		this.selectedElement = new Instruccion();
 	}
 
 	public void saveElement() {
-		if (trabajaActualmente)
-			selectedElement.setFechaFin(HASTAACTUALIDAD);
-		else
-			selectedElement.setFechaFin(fechaFin.toString());
-
 		if (this.selectedElement.getId() == 0L) {
 			selectedElement.setUser(user);
 			this.elements.add(this.selectedElement);
@@ -106,16 +100,5 @@ public class ExperienciaBean implements Serializable {
 		Mensajes.addMsg(MensajesTipo.INFORMACION, "Registros eliminados");
 		PrimeFaces.current().ajax().update("frm:growl", "frm:dt-elements");
 		PrimeFaces.current().executeScript("PF('dtElementos').clearFilters()");
-	}
-
-	public void loadDialog() {
-		if (this.selectedElement.getFechaFin().equals(HASTAACTUALIDAD)) {
-			this.trabajaActualmente = true;
-			this.fechaFin=null;
-		}
-		else {
-			this.trabajaActualmente = false;
-			this.fechaFin = LocalDate.parse(this.selectedElement.getFechaFin());
-		}
 	}
 }

@@ -97,8 +97,8 @@
 							icon="pi pi-external-link" onclick="PF('dlgFoto').show()" />
 						<p:outputLabel rendered="#{not empty datosPersonalesBean.foto}"
 							style="width:100%;text-align:center;">
-							<img src="data:image/png;base64,${datosPersonalesBean.foto}"
-								style="max-width: 300px;" />
+							<img class="img-fluid"
+								src="data:image/png;base64,${datosPersonalesBean.foto}" />
 						</p:outputLabel>
 					</p:panel>
 				</div>
@@ -163,8 +163,9 @@
 				</p>
 				<f:facet name="footer">
 					<p:commandButton value="Aceptar" icon="pi pi-check"
-						actionListener="#{datosPersonalesBean.changeCv()}" update="frm"
-						process="@this txtCv" onclick="PF('dlgCv').hide()" />
+						actionListener="#{datosPersonalesBean.changeCv()}"
+						update="frm:pnlCv" process="@this txtCv"
+						onclick="PF('dlgCv').hide()" />
 
 					<p:commandButton value="Cancelar" icon="pi pi-times"
 						onclick="PF('dlgCv').hide()" class="ui-button-secondary"

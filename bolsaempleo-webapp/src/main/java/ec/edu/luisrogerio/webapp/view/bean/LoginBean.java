@@ -47,7 +47,7 @@ public class LoginBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		fullName = authenticationHandler.getFullName();
+		fullName = authenticationHandler.getFullName().split("\\s+")[0];
 		user = authenticationHandler.getUser();
 
 		time = 1800;
