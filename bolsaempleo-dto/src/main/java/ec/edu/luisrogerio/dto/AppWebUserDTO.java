@@ -10,20 +10,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AppWebUser extends User {
+public class AppWebUserDTO extends User {
 
 	private static final long serialVersionUID = 1L;
 
 	private final Long id;
 	private final String fullName;
+	private byte[] foto;
 
-	public AppWebUser(String username, String password, boolean enabled, boolean accountNonExpired,
+	public AppWebUserDTO(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities,
-			Long id, String fullName) {
+			Long id, String fullName, byte[] foto) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
 		this.id = id;
 		this.fullName = fullName;
+		this.foto=foto;
 
 	}
 

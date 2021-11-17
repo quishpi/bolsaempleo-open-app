@@ -2,21 +2,49 @@
 <!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cv" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bae8b4f-3554-4508-a4bd-2cd3c24c8894">
 	<parameter name="experiencias" class="java.util.List"/>
-	<parameter name="sbrInstruccion" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="sbrExperiencia" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="instrucciones" class="java.util.List"/>
+	<parameter name="sbrInstruccion" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="capacitaciones" class="java.util.List"/>
+	<parameter name="sbrCapacitacion" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="bkg_cv" class="java.io.InputStream"/>
+	<parameter name="foto" class="java.io.InputStream"/>
+	<parameter name="referenciasPersonales" class="java.util.List"/>
+	<parameter name="sbrReferenciaPersonal" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="referenciasProfesionales" class="java.util.List"/>
+	<parameter name="sbrReferenciaProfesional" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="apellido" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="celular" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="ciudad" class="java.lang.String"/>
+	<field name="provincia" class="java.lang.String"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="802" splitType="Stretch">
+			<property name="net.sf.jasperreports.export.html.use.background.image.to.align"/>
+			<image>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="790" uuid="2017273f-9202-4603-bd65-378875c22a82">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{bkg_cv}]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
-		<band height="106" splitType="Stretch">
+		<band height="100" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="106" backcolor="#336699" uuid="7a472c07-113f-4312-911c-6fbb36730388"/>
+				<reportElement x="0" y="0" width="555" height="100" backcolor="#336699" uuid="7a472c07-113f-4312-911c-6fbb36730388">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<graphicElement>
 					<pen lineWidth="0.0"/>
 				</graphicElement>
@@ -38,26 +66,122 @@
 		</band>
 	</title>
 	<detail>
-		<band height="258" splitType="Stretch">
+		<band height="550" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="0" width="555" height="50" uuid="0219122b-5e07-4c14-bbde-4fe06b7d4bba"/>
+				<reportElement positionType="Float" x="0" y="0" width="370" height="50" uuid="0219122b-5e07-4c14-bbde-4fe06b7d4bba">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{experiencias})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{sbrExperiencia}]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="60" width="555" height="50" uuid="e30f42c4-6216-4dae-81da-ddd4236f46bc"/>
+				<reportElement positionType="Float" x="0" y="50" width="370" height="50" uuid="e30f42c4-6216-4dae-81da-ddd4236f46bc">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{instrucciones})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{sbrInstruccion}]]></subreportExpression>
 			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="100" width="370" height="50" uuid="4223de5c-1189-4a2d-8d67-cfd6096137a1">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{capacitaciones})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{sbrCapacitacion}]]></subreportExpression>
+			</subreport>
+			<rectangle radius="5">
+				<reportElement x="400" y="-40" width="140" height="140" uuid="d64c84da-d451-421f-94d1-8205ba12f059">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#3B3B3B"/>
+				</graphicElement>
+			</rectangle>
+			<image>
+				<reportElement x="405" y="-35" width="130" height="130" uuid="9e5d9d83-8c99-4b7f-a0db-4a9cc5d682f3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{foto}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="380" y="140" width="175" height="20" forecolor="#034C99" uuid="a774ab72-7722-47a4-a0fb-d854f2075301"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos Personales]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="170" width="175" height="30" uuid="209a2f51-bffa-4d60-9fcf-75c4fef311e8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre} + " "+  $F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="350" width="175" height="104" uuid="894d39eb-d2f5-4888-abc8-75f1917310b0"/>
+				<textElement markup="styled">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>" + "Dirección:" +"</style> \n" 
++ $F{direccion} + "\n"
++ $F{ciudad} + "/" + $F{provincia} + "/Ecuador"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="250" width="175" height="50" uuid="9c296a9c-33b8-4636-92ed-58036a454da8"/>
+				<textElement markup="styled">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>" + "Teléfono:" + "</style> \n"
++ $F{celular}  + "\n"
++ $F{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="210" width="175" height="30" uuid="414e17fa-1714-4148-a42e-72ef71797b17"/>
+				<textElement markup="styled">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>"+"Cédula de identidad:" + "</style>\n"
++  $F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="306" width="175" height="40" uuid="e7d315a1-a64a-4e04-88de-01180d81fb6f"/>
+				<textElement markup="styled">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style isBold='true'>" + "Email:" + "</style> \n"
++ $F{email}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="150" width="370" height="50" uuid="8335d878-ee93-4217-a2c0-0306f2506d5e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{referenciasPersonales})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{sbrReferenciaPersonal}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="200" width="370" height="50" uuid="ef3e8799-a1e0-4051-96eb-fd0ffe9e61c0">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{referenciasProfesionales})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{sbrReferenciaProfesional}]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="20" forecolor="#3D3D3D" uuid="34ed7244-664f-4e30-8a8e-c466729593b0"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[www.insteclrg.edu.ec]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

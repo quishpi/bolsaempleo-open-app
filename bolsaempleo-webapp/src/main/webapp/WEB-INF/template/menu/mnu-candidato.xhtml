@@ -3,65 +3,80 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-<style>
-	
+	<style>
 </style>
 </h:head>
 <h:body>
-	
-		<li class="nav-item"><a href="#" class="nav-link"> <i
+
+	<li class="nav-item menu-open"><a href="#" class="nav-link"> <i
+			class="nav-icon fas fa-table"></i>
+			<p>
+				Candidato <i class="fas fa-angle-left right"></i>
+			</p>
+	</a>
+		<ul class="nav nav-treeview">
+			<li class="nav-item"><a href="datospersonales.xhtml"
+				class="nav-link"> <i class="fas fa-id-badge nav-icon"></i>
+					<p>Datos personales</p>
+			</a></li>
+			<li class="nav-item"><a href="experiencia.xhtml"
+				class="nav-link"> <i class="fas fa-briefcase nav-icon"></i>
+					<p>Experiencia</p>
+			</a></li>
+			<li class="nav-item"><a href="capacitacion.xhtml"
+				class="nav-link"> <i class="fas fa-book-reader nav-icon"></i>
+					<p>Capacitación</p>
+			</a></li>
+			<li class="nav-item"><a href="instruccion.xhtml"
+				class="nav-link"> <i class="fas fa-graduation-cap nav-icon"></i>
+					<p>Instrucción formal</p>
+			</a></li>
+			<li class="nav-item"><a href="referenciapersonal.xhtml"
+				class="nav-link"> <i class="fas fa-hands-helping nav-icon"></i>
+					<p>Referencia personal</p>
+			</a></li>
+			<li class="nav-item"><a href="referenciaprofesional.xhtml"
+				class="nav-link"> <i class="fas fa-handshake nav-icon"></i>
+					<p>Referencia profesional</p>
+			</a></li>
+		</ul></li>
+	<li class="nav-header"><a class="brand-link" style="padding: 0;"></a>
+	</li>
+	<h:form id="frmMnu">
+		<li class="nav-item menu-open"><a href="#" class="nav-link"
+			onmouseover="this.style.color='#ffffff';"
+			onmouseout="this.style.color='';"> <i
 				class="nav-icon fas fa-table"></i>
 				<p>
-					Candidato <i class="fas fa-angle-left right"></i>
+					Descargar CV <i class="fas fa-angle-left right"></i>
 				</p>
 		</a>
 			<ul class="nav nav-treeview">
-				<li class="nav-item"><a href="datospersonales.xhtml" 
-					class="nav-link"> <i class="fas fa-id-badge nav-icon"></i>
-						<p>Datos personales</p>
-				</a></li>
-				<li class="nav-item"><a href="experiencia.xhtml"
-					class="nav-link"> <i class="fas fa-briefcase nav-icon"></i>
-						<p>Experiencia</p>
-				</a></li>
-				<li class="nav-item"><a href="capacitacion.xhtml"
-					class="nav-link"> <i class="fas fa-book-reader nav-icon"></i>
-						<p>Capacitación</p>
-				</a></li>
-				<li class="nav-item"><a href="instruccion.xhtml"
-					class="nav-link"> <i class="fas fa-graduation-cap nav-icon"></i>
-						<p>Instrucción formal</p>
-				</a></li>
-				<li class="nav-item"><a href="referenciapersonal.xhtml"
-					class="nav-link"> <i class="fas fa-hands-helping nav-icon"></i>
-						<p>Referencia personal</p>
-				</a></li>
-				<li class="nav-item"><a href="referenciaprofesional.xhtml"
-					class="nav-link"> <i class="fas fa-handshake nav-icon"></i>
-						<p>Referencia profesional</p>
-				</a></li>
+				<li class="nav-item"><p:commandLink class="nav-link"
+						onmouseover="this.style.color='#ffffff';"
+						onmouseout="this.style.color='';" action="#{cvBean.openPdf()}"
+						ajax="false">
+						<i class="nav-icon fas fa-file-pdf"></i>
+						<p>Formato LRG</p>
+					</p:commandLink></li>
+				<c:if test="${!empty datosPersonalesBean.cv}">
+					<li class="nav-item"><a class="nav-link"
+						onmouseover="this.style.color='#ffffff';"
+						onmouseout="this.style.color='';"
+						download="cv-#{datosPersonalesBean.candidato.cedula}-formato2.pdf"
+						href="data:application/pdf;base64,#{datosPersonalesBean.cv}">
+							<i class="fas fa-file-pdf nav-icon"></i>
+							<p>Formato MinTrabajo</p>
+					</a></li>
+				</c:if>
 			</ul></li>
-		<li class="nav-header">
-			<a class="brand-link" style="padding: 0;"></a>
-		</li>
-		<li class="nav-item">
-		<h:form>
-			<p:commandLink class="nav-link" 
-				onmouseover="this.style.color='#ffffff';"
-				onmouseout="this.style.color='';"
-				action="#{cvBean.openPdf()}" 
-				ajax="false">
-				<i class="nav-icon fas fa-file-pdf"></i>
-				<p>Descargar CV</p>
-			</p:commandLink>
-			</h:form>
-		</li>
-		<li class="nav-header">
-			<a class="brand-link" style="padding: 0;"></a>
-		</li>
-	
+	</h:form>
+	<li class="nav-header"><a class="brand-link" style="padding: 0;"></a>
+	</li>
+
 </h:body>
 </html>

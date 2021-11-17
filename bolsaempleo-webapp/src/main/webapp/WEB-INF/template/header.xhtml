@@ -24,9 +24,8 @@
 
 			<li class="nav-item dropdown"><a class="nav-link"
 				data-toggle="dropdown" href="#"> <img style="height: 30px;"
-					src="/resources/adminlte-31/dist/img/user2-160x160.jpg"
-					class="img-circle elevation-2" alt="User Image" /> 
-					${loginBean.fullName} (${loginBean.roleName})
+					src="#{loginBean.foto}" class="img-circle elevation-2"
+					alt="User Image" /> ${loginBean.fullName} (${loginBean.roleName})
 			</a>
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 					<a onclick="PF('dlgCambiarClave').show()" class="dropdown-item">
@@ -52,7 +51,7 @@
 				<p:outputLabel for="txtPasswordActual" value="Contraseña Actual"
 					class="form-label" />
 				<p:inputText id="txtPasswordActual"
-					value="#{cambiarClaveBean.claveActual}"
+					value="#{cambiarClaveBean.passwordDto.oldPassword}"
 					requiredMessage="Contraseña actual es obligatorio " required="true"
 					type="password" />
 
@@ -64,7 +63,7 @@
 					promptLabel="Contraseña nueva" weakLabel="Débil" goodLabel="Buena"
 					strongLabel="Fuerte" autocomplete="new-password" required="true"
 					requiredMessage="Contraseña nueva es obligatorio"
-					value="#{cambiarClaveBean.clave}" />
+					value="#{cambiarClaveBean.passwordDto.newPassword}" />
 
 			</p>
 			<p class="p-m-0">
@@ -74,7 +73,7 @@
 					promptLabel="Repita contraseña" weakLabel="Débil" goodLabel="Buena"
 					strongLabel="Fuerte" autocomplete="new-password" required="true"
 					requiredMessage="Confirme contraseña es obligatorio"
-					value="#{cambiarClaveBean.claveRepite}" />
+					value="#{cambiarClaveBean.passwordRepite}" />
 
 			</p>
 			<f:facet name="footer">
@@ -87,10 +86,6 @@
 					onclick="PF('dlgCambiarClave').hide()" class="ui-button-secondary"
 					immediate="true" />
 			</f:facet>
-			<p:messages id="messages" showDetail="false" autoUpdate="true"
-				closable="true" life="5000">
-				<p:autoUpdate />
-			</p:messages>
 		</p:dialog>
 
 	</h:form>

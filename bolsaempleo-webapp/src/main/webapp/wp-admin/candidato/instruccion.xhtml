@@ -81,7 +81,8 @@
 								update=":frm:manage-element-content"
 								oncomplete="PF('manageElementDialog').show()"
 								styleClass="edit-button rounded-button ui-button-success"
-								process="@this">
+								process="@this"
+								action="#{instruccionBean.loadDialog}">
 								<f:setPropertyActionListener value="#{element}"
 									target="#{instruccionBean.selectedElement}" />
 								<p:resetInput target=":frm:manage-element-content" />

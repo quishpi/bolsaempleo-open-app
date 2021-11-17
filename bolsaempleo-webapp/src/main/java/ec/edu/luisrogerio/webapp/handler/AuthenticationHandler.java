@@ -13,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ec.edu.luisrogerio.common.enums.UserRole;
 import ec.edu.luisrogerio.domain.Authority;
 import ec.edu.luisrogerio.domain.User;
-import ec.edu.luisrogerio.dto.AppWebUser;
+import ec.edu.luisrogerio.dto.AppWebUserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +23,7 @@ public class AuthenticationHandler {
 
 	private User user;
 	private String fullName;
+	private byte[] foto;
 
 	public AuthenticationHandler() {
 		user = new User();
@@ -35,11 +36,12 @@ public class AuthenticationHandler {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			AppWebUser appWebUser = (AppWebUser) authentication.getPrincipal();
+			AppWebUserDTO appWebUser = (AppWebUserDTO) authentication.getPrincipal();
 			user.setId(appWebUser.getId());
 			user.setUsername(appWebUser.getUsername());
 
 			fullName = appWebUser.getFullName();
+			foto = appWebUser.getFoto();
 			Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 			List<Authority> listAuthorities = new ArrayList<Authority>();
 			for (GrantedAuthority gAut : authorities) {

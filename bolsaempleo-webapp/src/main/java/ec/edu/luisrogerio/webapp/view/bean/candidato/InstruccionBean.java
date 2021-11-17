@@ -2,6 +2,8 @@ package ec.edu.luisrogerio.webapp.view.bean.candidato;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -33,9 +35,9 @@ public class InstruccionBean implements Serializable {
 	private Instruccion selectedElement;
 	private List<Instruccion> selectedElements;
 	private List<NivelInstruccion> niveles;
-	private NivelInstruccion selectedNivel;
-	
+
 	private User user;
+	private NivelInstruccion selectedNivel;
 
 	@Autowired
 	private LoginBean loginBean;
@@ -48,7 +50,7 @@ public class InstruccionBean implements Serializable {
 	public void init() {
 		this.user = loginBean.getUser();
 		this.elements = entityService.buscarPorUsuario(user);
-		niveles=nivelInstruccionService.buscarTodo(new NivelInstruccion());
+		niveles = nivelInstruccionService.buscarTodo(new NivelInstruccion());
 	}
 
 	public void openNew() {
@@ -100,5 +102,11 @@ public class InstruccionBean implements Serializable {
 		Mensajes.addMsg(MensajesTipo.INFORMACION, "Registros eliminados");
 		PrimeFaces.current().ajax().update("frm:growl", "frm:dt-elements");
 		PrimeFaces.current().executeScript("PF('dtElementos').clearFilters()");
+	}
+
+	public void loadDialog() {
+		Map<Long, NivelInstruccion> nivelesMap = niveles.stream()
+				.collect(Collectors.toMap(NivelInstruccion::getId, nivel -> nivel));
+		selectedElement.setNivelInstruccion(nivelesMap.get(selectedElement.getNivelInstruccion().getId()));
 	}
 }

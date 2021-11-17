@@ -1,7 +1,12 @@
 package ec.edu.luisrogerio.webapp.view.bean.candidato;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +15,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,12 +23,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ec.edu.luisrogerio.domain.candidato.Capacitacion;
 import ec.edu.luisrogerio.domain.candidato.DatosCandidato;
 import ec.edu.luisrogerio.domain.candidato.Experiencia;
 import ec.edu.luisrogerio.domain.candidato.Instruccion;
+import ec.edu.luisrogerio.domain.candidato.ReferenciaPersonal;
+import ec.edu.luisrogerio.domain.candidato.ReferenciaProfesional;
+import ec.edu.luisrogerio.dto.reports.DatosCandidatoDTO;
+import ec.edu.luisrogerio.service.candidato.CapacitacionService;
 import ec.edu.luisrogerio.service.candidato.DatosCandidatoService;
 import ec.edu.luisrogerio.service.candidato.ExperienciaService;
 import ec.edu.luisrogerio.service.candidato.InstruccionService;
+import ec.edu.luisrogerio.service.candidato.ReferenciaPersonalService;
+import ec.edu.luisrogerio.service.candidato.ReferenciaProfesionalService;
 import ec.edu.luisrogerio.webapp.utils.Constants;
 import ec.edu.luisrogerio.webapp.utils.Utils;
 import ec.edu.luisrogerio.webapp.view.bean.LoginBean;
@@ -44,8 +57,6 @@ public class cvBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private DatosCandidato candidato;
-
 	@Autowired
 	private DatosCandidatoService candidatoService;
 
@@ -53,6 +64,12 @@ public class cvBean implements Serializable {
 	private ExperienciaService experienciaService;
 	@Autowired
 	private InstruccionService instruccionService;
+	@Autowired
+	private CapacitacionService capacitacionService;
+	@Autowired
+	private ReferenciaPersonalService referenciaPersonalService;
+	@Autowired
+	private ReferenciaProfesionalService referenciaProfesionalService;
 
 	@Autowired
 	LoginBean loginBean;
@@ -67,17 +84,26 @@ public class cvBean implements Serializable {
 		if (!candidatoOptional.isPresent()) {
 			Utils.redirectToPage(Constants.URI_WEB_404);
 		}
-		candidato = candidatoOptional.get();
 		Optional<DatosCandidato> candidato = candidatoService.buscarPorCedula(loginBean.getUser().getUsername());
-		List<DatosCandidato> candidatos = new ArrayList<DatosCandidato>();
-		candidatos.add(candidato.get());
+		DatosCandidatoDTO candidatoDto = candidatoToDTO(candidato.get());
+
+		List<DatosCandidatoDTO> candidatos = new ArrayList<DatosCandidatoDTO>();
+		candidatos.add(candidatoDto);
 
 		List<Experiencia> experiencias = experienciaService.buscarPorUsuario(loginBean.getUser());
 		List<Instruccion> instrucciones = instruccionService.buscarPorUsuario(loginBean.getUser());
+		List<Capacitacion> capacitaciones = capacitacionService.buscarPorUsuario(loginBean.getUser());
+		List<ReferenciaPersonal> referenciasPersonales = referenciaPersonalService
+				.buscarPorUsuario(loginBean.getUser());
+		List<ReferenciaProfesional> referenciasProfesionales = referenciaProfesionalService
+				.buscarPorUsuario(loginBean.getUser());
 
 		String masterRptPath = "src/main/webapp/resources/reportes/cv.jrxml";
 		String experienciaRptPath = "src/main/webapp/resources/reportes/sbrExperiencia.jrxml";
 		String instruccionRptPath = "src/main/webapp/resources/reportes/sbrInstruccion.jrxml";
+		String capacitacionRptPath = "src/main/webapp/resources/reportes/sbrCapacitacion.jrxml";
+		String referenciaPersonalRptPath = "src/main/webapp/resources/reportes/sbrReferenciaPersonal.jrxml";
+		String referenciaProfesionalRptPath = "src/main/webapp/resources/reportes/sbrReferenciaProfesional.jrxml";
 
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("sbrExperiencia", JasperCompileManager.compileReport(experienciaRptPath));
@@ -86,7 +112,51 @@ public class cvBean implements Serializable {
 		parameters.put("sbrInstruccion", JasperCompileManager.compileReport(instruccionRptPath));
 		parameters.put("instrucciones", instrucciones);
 
+		parameters.put("sbrCapacitacion", JasperCompileManager.compileReport(capacitacionRptPath));
+		parameters.put("capacitaciones", capacitaciones);
+
+		parameters.put("sbrReferenciaPersonal", JasperCompileManager.compileReport(referenciaPersonalRptPath));
+		parameters.put("referenciasPersonales", referenciasPersonales);
+
+		parameters.put("sbrReferenciaProfesional", JasperCompileManager.compileReport(referenciaProfesionalRptPath));
+		parameters.put("referenciasProfesionales", referenciasProfesionales);
+
+		if (candidato.get().getFoto() != null)
+			parameters.put("foto", new ByteArrayInputStream(candidato.get().getFoto()));
+
+		byte[] image = extractBytes2("src/main/webapp/resources/images/bkg_cv.png");
+		InputStream logo = new ByteArrayInputStream(image);
+		parameters.put("bkg_cv", logo);
+
 		toPDF(parameters, masterRptPath, candidatos, "cv_" + candidato.get().getCedula());
+	}
+
+	private DatosCandidatoDTO candidatoToDTO(DatosCandidato candidato) {
+		DatosCandidatoDTO candidatoDto = new DatosCandidatoDTO();
+		candidatoDto.setUserName(candidato.getUser().getUsername());
+		candidatoDto.setNombre(candidato.getNombre());
+		candidatoDto.setApellido(candidato.getApellido());
+		candidatoDto.setCedula(candidato.getCedula());
+		candidatoDto.setFoto(candidato.getFoto());
+		candidatoDto.setCiudad(candidato.getCiudad().getNombre());
+		candidatoDto.setProvincia(candidato.getCiudad().getProvincia().getNombre());
+		candidatoDto.setDireccion(candidato.getDireccion());
+		candidatoDto.setTelefono(candidato.getTelefono());
+		candidatoDto.setCelular(candidato.getCelular());
+		candidatoDto.setEmail(candidato.getEmail());
+		candidatoDto.setFechaNacimiento(candidato.getFechaNacimiento());
+		return candidatoDto;
+	}
+
+	public static byte[] extractBytes2(String ImageName) throws IOException {
+		File imgPath = new File(ImageName);
+		String ext = "png";
+		BufferedImage bufferedImage = ImageIO.read(imgPath);
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, ext, baos);
+
+		return baos.toByteArray();
 	}
 
 	public void toPDF(HashMap<String, Object> parameters, String masterRptPath, List<?> masterDataSet,

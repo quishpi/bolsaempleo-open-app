@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ec.edu.luisrogerio.common.AppException;
 import ec.edu.luisrogerio.domain.User;
+import ec.edu.luisrogerio.dto.PasswordDTO;
 import ec.edu.luisrogerio.persistence.UserRepository;
 import ec.edu.luisrogerio.service.GenericCRUDServiceImpl;
 
@@ -43,5 +44,25 @@ public class UserService extends GenericCRUDServiceImpl<User, Long> {
 		 * if (optional.isPresent()) { return optional; } else { throw new
 		 * AppException(String.format("Usuario no registrado en el sistema", entity)); }
 		 */
+	}
+
+	public void actualizarPassword(String username, PasswordDTO passwordDTO) {
+		if (passwordDTO.getOldPassword().compareTo(passwordDTO.getNewPassword()) == 0) {
+			throw new AppException("La nueva contraseña no puede ser igual a la anterior");
+		}
+		String newEncodedPassword = passwordEncoder.encode(passwordDTO.getNewPassword());
+		User usuario = new User();
+		usuario.setUsername(username);
+		Optional<User> optionalUser = buscar(usuario);
+		if (!optionalUser.isPresent()) {
+			throw new AppException(String.format("El usuario %s no se encuentra registrado", username));
+		}
+		User user = optionalUser.get();
+		String storedPassword = user.getPassword();
+		if (!passwordEncoder.matches(passwordDTO.getOldPassword(), storedPassword)) {
+			throw new AppException(String.format("La contraseña actual del usuario %s no es correcto", username));
+		}
+		user.setPassword(newEncodedPassword);
+		entityRepository.save(user);
 	}
 }

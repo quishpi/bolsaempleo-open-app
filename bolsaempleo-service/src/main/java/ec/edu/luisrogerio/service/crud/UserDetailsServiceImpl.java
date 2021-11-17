@@ -17,7 +17,7 @@ import ec.edu.luisrogerio.domain.Authority;
 import ec.edu.luisrogerio.domain.admin.DatosAdmin;
 import ec.edu.luisrogerio.domain.candidato.DatosCandidato;
 import ec.edu.luisrogerio.domain.empleador.DatosEmpleador;
-import ec.edu.luisrogerio.dto.AppWebUser;
+import ec.edu.luisrogerio.dto.AppWebUserDTO;
 import ec.edu.luisrogerio.persistence.UserRepository;
 import ec.edu.luisrogerio.service.admin.DatosAdminService;
 import ec.edu.luisrogerio.service.candidato.DatosCandidatoService;
@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		AppWebUser appWebUser = null;
+		AppWebUserDTO appWebUser = null;
 
 		ec.edu.luisrogerio.domain.User appUser = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("No existe usuario"));
@@ -60,15 +60,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 
 		String fullname = null;
+		byte[] foto = null;
 		if (authority.equals(UserRole.ROLE_CANDIDATO.toString())) {
 			Optional<DatosCandidato> candidatoOptional = candidatoService.buscarPorCedula(username);
 			if (candidatoOptional.isPresent()) {
 				fullname = candidatoOptional.get().getNombre() + " " + candidatoOptional.get().getApellido();
+				foto = candidatoOptional.get().getFoto();
 			}
 		} else if (authority.equals(UserRole.ROLE_EMPLEADOR.toString())) {
 			Optional<DatosEmpleador> empleadorOptional = empleadorService.buscarPorRuc(username);
 			if (empleadorOptional.isPresent()) {
 				fullname = empleadorOptional.get().getNombreEmpresa();
+				foto = empleadorOptional.get().getLogo();
 			}
 
 		} else if (authority.equals(UserRole.ROLE_ADMIN.toString())) {
@@ -78,8 +81,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 
 		}
-		appWebUser = new AppWebUser(appUser.getUsername(), appUser.getPassword(), appUser.isEnabled(), true, true, true,
-				grantList, appUser.getId(), fullname);
+		appWebUser = new AppWebUserDTO(appUser.getUsername(), appUser.getPassword(), appUser.isEnabled(), true, true, true,
+				grantList, appUser.getId(), fullname, foto);
 		return appWebUser;
 	}
 }

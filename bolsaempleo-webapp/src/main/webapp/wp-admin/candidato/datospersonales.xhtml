@@ -62,7 +62,6 @@
 						requiredMessage="Ingrese Celular"
 						value="#{datosPersonalesBean.candidato.celular}" />
 				</div>
-
 				<div class="p-field">
 					<p:outputLabel for="cmbProvincia" value="Residencia"
 						class="form-label" />
@@ -92,6 +91,13 @@
 					</p:selectOneMenu>
 				</div>
 				<div class="p-field">
+					<p:outputLabel for="txtDireccion" value="Dirección"
+						class="form-label" />
+					<p:inputText id="txtDireccion" type="text" required="true"
+						requiredMessage="Ingrese Dirección"
+						value="#{datosPersonalesBean.candidato.direccion}" />
+				</div>
+				<div class="p-field">
 					<p:panel id="pnlFoto" header="Foto">
 						<p:commandButton value="Subir foto" type="button"
 							icon="pi pi-external-link" onclick="PF('dlgFoto').show()" />
@@ -104,7 +110,7 @@
 				</div>
 
 				<div class="p-field">
-					<p:panel id="pnlCv" header="Hoja de vida (formato socioempleo)">
+					<p:panel id="pnlCv" header="Hoja de vida (formato Min.Trabajo)">
 						<p:commandButton value="Subir CV" type="button"
 							icon="pi pi-external-link" onclick="PF('dlgCv').show()" />
 						<p:outputLabel rendered="#{not empty datosPersonalesBean.cv}">
@@ -150,7 +156,7 @@
 						immediate="true" />
 				</f:facet>
 			</p:dialog>
-			<p:dialog header="Hoja de vida (formato socioempleo)"
+			<p:dialog header="Hoja de vida (formato Min.Trabajo)"
 				widgetVar="dlgCv" minHeight="40" width="350" showEffect="fade"
 				modal="true">
 				<p class="p-m-0">
@@ -164,7 +170,7 @@
 				<f:facet name="footer">
 					<p:commandButton value="Aceptar" icon="pi pi-check"
 						actionListener="#{datosPersonalesBean.changeCv()}"
-						update="frm:pnlCv" process="@this txtCv"
+						update="frm:pnlCv frmMnu" process="@this txtCv"
 						onclick="PF('dlgCv').hide()" />
 
 					<p:commandButton value="Cancelar" icon="pi pi-times"
