@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>ec.edu.luisrogerio</groupId>
+	<groupId>ec.edu.insteclrg</groupId>
 	<artifactId>bolsaempleo-open-api</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>

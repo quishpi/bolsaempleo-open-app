@@ -14,12 +14,12 @@
 	</lifecycle>
 	<converter>
 		<converter-id>entityConverter</converter-id>
-		<converter-class>ec.edu.luisrogerio.webapp.utils.EntityConverter
+		<converter-class>ec.edu.insteclrg.webapp.utils.EntityConverter
 		</converter-class>
 	</converter>
 	<converter>
 		<converter-id>toUpperCaseConverter</converter-id>
-		<converter-class>ec.edu.luisrogerio.webapp.utils.ToUpperCaseConverter
+		<converter-class>ec.edu.insteclrg.webapp.utils.ToUpperCaseConverter
 		</converter-class>
 	</converter>
 

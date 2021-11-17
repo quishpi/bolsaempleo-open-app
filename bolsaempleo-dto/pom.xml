@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>ec.edu.luisrogerio</groupId>
+		<groupId>ec.edu.insteclrg</groupId>
 		<artifactId>bolsaempleo-open-api</artifactId>
 		<version>1.0.0</version>
 	</parent>
@@ -13,7 +13,7 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>ec.edu.luisrogerio</groupId>
+			<groupId>ec.edu.insteclrg</groupId>
 			<artifactId>bolsaempleo-common</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
