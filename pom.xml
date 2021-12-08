@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>ec.edu.insteclrg</groupId>
-	<artifactId>bolsaempleo-open-api</artifactId>
+	<artifactId>bolsaempleo-open-app</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>bolsaempleo</name>
