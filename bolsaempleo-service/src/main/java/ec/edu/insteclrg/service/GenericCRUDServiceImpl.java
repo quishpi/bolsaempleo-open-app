@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
 public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRUDService<ENTITY, TYPE> {
 
 	@Autowired
