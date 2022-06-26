@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="title">Ofertas Laborales</ui:define>
+	<ui:define name="content">
+		<h:form id="frm" update="growl">
+			<p:growl id="growl" sticky="false" life="5000" showDetail="false"
+				autoUpdate="true" />
+			<div
+				class="col-lg-12 col-md-12 col-sm-12 container justify-content-center">
+				<div class="p-col-12">
+					<p:toolbar style="border:0px;padding:10px;">
+						<p:toolbarGroup>
+							<p:commandButton value="Listar todo" icon="pi pi-refresh"
+								actionListener="#{ofertasBean.listarToto}"
+								styleClass="ui-button-warning" style="margin-right: .5rem"
+								process="@this" update=":frm:growl">
+							</p:commandButton>
+						</p:toolbarGroup>
+						<p:toolbarGroup align="right" style="width:50%">
+							<div class="p-col-12" style="width: 100%">
+								<div class="ui-inputgroup">
+									<p:inputText id="txtBuscar" value="#{ofertasBean.textoBuscar}"
+										required="true" requiredMessage="Ingrese texto a buscar"
+										placeholder="Oferta o tipo de contrato"
+										validatorMessage="Ingrese mínimo 3 caracteres para buscar">
+										<f:validateLength minimum="3" />
+									</p:inputText>
+									<p:commandButton value="Buscar" icon="pi pi-search"
+										actionListener="#{ofertasBean.buscar}"
+										styleClass="ui-button-warning" style="margin-right: .5rem"
+										process="@this txtBuscar" update=":frm:growl">
+									</p:commandButton>
+								</div>
+							</div>
+						</p:toolbarGroup>
+					</p:toolbar>
+					<hr />
+					<div class="card">
+						<p:toolbar styleClass="p-mb-4" id="select-element-content"
+							style="padding: 10px;">
+							<p:toolbarGroup>
+							</p:toolbarGroup>
+							<p:toolbarGroup align="right">
+								<p:commandButton value="Exportar XLSX" icon="pi pi-file-excel"
+									styleClass="ui-button-help" ajax="false" immediate="true">
+									<p:dataExporter type="xlsxstream" target="dt-elements"
+										fileName="ofertas" />
+								</p:commandButton>
+							</p:toolbarGroup>
+						</p:toolbar>
+						<p:dataTable id="dt-elements" widgetVar="dtProducts" var="element"
+							value="#{ofertasBean.elements}" reflow="true"
+							styleClass="products-table"
+							selection="#{ofertasBean.selectedElements}"
+							rowKey="#{element.id}" paginator="true" rows="50"
+							rowSelectMode="add" paginatorPosition="bottom"
+							rowsPerPageTemplate="50,100,500,1000"
+							emptyMessage="No se encontraron registros" sortBy="#{element.id}"
+							sortOrder="ascending" rowIndexVar="index">
+							<f:facet name="header"></f:facet>
+							<p:column headerText="Nro." style="width:65px;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="" style="width:70px;text-align:center;"
+								exportable="false">
+								<div style="width: 100%">
+									<img style="max-width: 50px;"
+										src="#{ofertasBean.logo(element.logo)}"
+										class="img-circle elevation-2" />
+								</div>
+							</p:column>
+							<p:column headerText="Código" style="width:90px;"
+								sortBy="#{element.id}">
+								<h:outputText value="#{element.id}" />
+							</p:column>
+							<p:column headerText="Institución"
+								sortBy="#{element.nombreEmpresa}">
+								<h:outputText value="#{element.nombreEmpresa}" />
+							</p:column>
+							<p:column headerText="Oferta" sortBy="#{element.tituloOferta}">
+								<h:outputText value="#{element.tituloOferta}" />
+							</p:column>
+							<p:column headerText="Descripción de la oferta"
+								style="display:none;">
+								<h:outputText value="#{element.descripcion}" />
+							</p:column>
+							<p:column headerText="Remuneración"
+								sortBy="#{element.remuneracion}">
+								<h:outputText value="#{element.remuneracion}" />
+							</p:column>
+							<p:column headerText="Tipo Contrato"
+								sortBy="#{element.tipoContrato}">
+								<h:outputText value="#{element.tipoContrato}" />
+							</p:column>
+							<p:column headerText="Lugar de trabajo"
+								sortBy="#{element.ciudad}">
+								<h:outputText value="#{element.ciudad}" />/<h:outputText
+									value="#{element.provincia}" />
+							</p:column>
+							<p:column headerText="Fecha de publicación"
+								sortBy="#{element.fechaPublicacion}" style="width:150px;">
+								<h:outputText value="#{element.fechaPublicacion}" />
+							</p:column>
+							<p:column headerText="Fecha de límite aplicación"
+								sortBy="#{element.fechaLimiteAplicacion}}" style="width:150px;">
+								<h:outputText value="#{element.fechaLimiteAplicacion}"
+									styleClass="#{ofertasBean.expirado(element.fechaLimiteAplicacion) ? 'errorCell' : 'disponibleCell'}" />
+							</p:column>
+							<p:column exportable="false" style="width:70px;">
+								<p:commandButton icon="pi pi-eye"
+									update=":frm:manage-element-content-oferta"
+									oncomplete="PF('manageElementDialogSolicitud').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this" title="Detalle de la oferta"
+									style="width: 50px;height: 50px;border: solid 1px;">
+									<f:setPropertyActionListener value="#{element}"
+										target="#{ofertasBean.selectedElement}" />
+									<p:resetInput target=":frm:manage-element-content-oferta" />
+								</p:commandButton>
+								<p:commandButton icon="pi pi-list"
+									update=":frm:manage-element-content-aplicaciones"
+									oncomplete="PF('manageElementDialogAplicaciones').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this" title="Aplicaciones a la oferta"
+									action="#{ofertasBean.cargarAplicaciones(element.id)}"
+									style="width: 50px;height: 50px;border: solid 1px;">
+									<f:setPropertyActionListener value="#{element}"
+										target="#{ofertasBean.selectedElement}" />
+									<p:resetInput target=":frm:manage-element-content-aplicaciones" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+
+
+			<p:dialog header="Oferta laboral" showEffect="fade" modal="true"
+				id="dialog1" widgetVar="manageElementDialogSolicitud"
+				responsive="true" style="max-width:600px;">
+				<p:outputPanel id="manage-element-content-oferta" class="ui-fluid">
+					<p:outputPanel rendered="#{not empty ofertasBean.selectedElement}">
+						<div class="p-field">
+							<h4 style="text-align: center;">#{ofertasBean.selectedElement.nombreEmpresa}
+							</h4>
+						</div>
+						<div class="p-field" style="text-align: center;">
+							<a target="_blank" href="#{ofertasBean.banner()}"> <img
+								style="max-width: 150px;" src="#{ofertasBean.banner()}" />
+							</a>
+						</div>
+						<div class="p-field">
+							<p:outputLabel class="form-label" value="Oferta" />
+							<br /> #{ofertasBean.selectedElement.tituloOferta}
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel class="form-label" value="Descripción" />
+							<div style="width: 100%; height: 100px; overflow-y: scroll;">
+								<p:inputTextarea rows="6" cols="33" readonly="true"
+									value="#{ofertasBean.selectedElement.descripcion}" />
+
+							</div>
+						</div>
+						<div class="p-field">
+							<p:outputLabel class="form-label" value="Tipo de contrato:" />
+							#{ofertasBean.selectedElement.tipoContrato}
+						</div>
+						<div class="p-field">
+							<p:outputLabel class="form-label" value="Remuneracion: " />
+							#{ofertasBean.selectedElement.remuneracion}
+						</div>
+						<div class="p-field">
+							<p:outputLabel class="form-label" value="Lugar de trabajo: " />
+							#{ofertasBean.selectedElement.ciudad}/#{ofertasBean.selectedElement.provincia}
+						</div>
+
+						<div class="p-field">
+							<p:outputLabel class="form-label" value="Fecha de publicacion: " />
+							#{ofertasBean.selectedElement.fechaPublicacion}
+						</div>
+						<div class="p-field">
+							<p:outputLabel class="form-label"
+								value="Fecha limite de aplicacion: " />
+							#{ofertasBean.selectedElement.fechaLimiteAplicacion}
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+
+				<f:facet name="footer">
+					<p:commandButton value="Cancelar" icon="pi pi-times"
+						onclick="PF('manageElementDialogSolicitud').hide()"
+						class="ui-button-secondary" />
+				</f:facet>
+			</p:dialog>
+			<p:dialog header="Aplicaciones a la oferta" showEffect="fade"
+				modal="true" id="dialog2"
+				widgetVar="manageElementDialogAplicaciones" responsive="true"
+				width="50%" height="540" position="center,center">
+				<p:outputPanel id="manage-element-content-aplicaciones"
+					class="ui-fluid">
+					<p:outputPanel rendered="#{not empty ofertasBean.selectedElement}">
+						<div class="p-field">
+							<h4 style="text-align: center;">#{ofertasBean.selectedElement.nombreEmpresa}
+							</h4>
+							<p style="text-align: center;">#{ofertasBean.selectedElement.tituloOferta}
+							</p>
+						</div>
+						<div class="p-field">
+							<p:dataTable id="dt-elements2" widgetVar="dtProducts2"
+								var="candidato" value="#{ofertasBean.candidatos}" reflow="true"
+								styleClass="products-table" rowKey="#{candidato.id}"
+								paginator="true" rows="5" rowSelectMode="add"
+								paginatorPosition="bottom" rowsPerPageTemplate="5,10,20"
+								emptyMessage="No se encontraron registros"
+								sortBy="#{candidato.id}" sortOrder="ascending"
+								rowIndexVar="index">
+								<f:facet name="header"></f:facet>
+								<p:column headerText="Nro." style="width:65px;">
+									<h:outputText value="#{index + 1}" />
+								</p:column>
+								<p:column headerText="Cedula" sortBy="#{candidatocedula}">
+									<h:outputText value="#{candidato.cedula}"/>
+								</p:column>
+								<p:column headerText="Aplicante" sortBy="#{candidato.apellido}">
+									<h:outputText value="#{candidato.apellido}" />&nbsp;<h:outputText value="#{candidato.nombre}" />
+								</p:column>
+							</p:dataTable>
+
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+				<f:facet name="footer">
+					<p:commandButton value="Cancelar" icon="pi pi-times"
+						onclick="PF('manageElementDialogAplicaciones').hide()"
+						class="ui-button-secondary" />
+				</f:facet>
+			</p:dialog>
+			<script>
+				//<![CDATA[
+
+				//]]>
+			</script>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

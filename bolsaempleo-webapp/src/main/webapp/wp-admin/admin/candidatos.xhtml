@@ -1,0 +1,200 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/layout.xhtml">
+
+	<ui:define name="title">Candidatos</ui:define>
+	<ui:define name="content">
+		<h:form id="frm" update="growl">
+			<p:growl id="growl" sticky="false" life="5000" showDetail="false"
+				autoUpdate="true" />
+			<div
+				class="col-lg-12 col-md-12 col-sm-12 container justify-content-center">
+				<div class="p-col-12">
+					<p:toolbar style="border:0px;padding:10px;">
+						<p:toolbarGroup>
+							<p:commandButton value="Listar todo" icon="pi pi-refresh"
+								actionListener="#{candidatosBean.listarToto}"
+								styleClass="ui-button-warning" style="margin-right: .5rem"
+								process="@this" update=":frm:growl">
+							</p:commandButton>
+						</p:toolbarGroup>
+						<p:toolbarGroup align="right" style="width:50%">
+							<div class="p-col-12" style="width:100%">
+								<div class="ui-inputgroup">
+									<p:inputText id="txtBuscar"
+										value="#{candidatosBean.textoBuscar}" required="true"
+										requiredMessage="Ingrese texto a buscar"
+										placeholder="Cédula, nombre o apellido"
+										validatorMessage="Ingrese mínimo 3 caracteres para buscar">
+										<f:validateLength minimum="3" />
+									</p:inputText>
+									<p:commandButton value="Buscar" icon="pi pi-search"
+										actionListener="#{candidatosBean.buscar}"
+										styleClass="ui-button-warning" style="margin-right: .5rem"
+										process="@this txtBuscar" update=":frm:growl">
+									</p:commandButton>
+								</div>
+							</div>
+						</p:toolbarGroup>
+					</p:toolbar>
+					<hr />
+					<div class="card">
+						<p:toolbar styleClass="p-mb-4" id="select-element-content"
+							style="padding: 10px;">
+							<p:toolbarGroup>
+							</p:toolbarGroup>
+							<p:toolbarGroup align="right">
+								<p:commandButton value="Exportar PDF" icon="pi pi-file-pdf"
+									styleClass="ui-button-help" ajax="false" immediate="true">
+									<p:dataExporter type="pdf" target="dt-elements"
+										fileName="candidatos" />
+								</p:commandButton>
+								<p:spacer width="10" />
+								<p:commandButton value="Exportar XLSX" icon="pi pi-file-excel"
+									styleClass="ui-button-help" ajax="false" immediate="true">
+									<p:dataExporter type="xlsxstream" target="dt-elements"
+										fileName="candidatos" />
+								</p:commandButton>
+							</p:toolbarGroup>
+						</p:toolbar>
+						<p:dataTable id="dt-elements" widgetVar="dtProducts" var="element"
+							value="#{candidatosBean.elements}" reflow="true"
+							styleClass="products-table"
+							selection="#{candidatosBean.selectedElements}"
+							rowKey="#{element.id}" paginator="true" rows="50"
+							rowSelectMode="add" paginatorPosition="bottom"
+							rowsPerPageTemplate="50,100,500,1000"
+							emptyMessage="No se encontraron registros" sortBy="#{element.id}"
+							sortOrder="ascending" rowIndexVar="index">
+							<!-- filteredValue="#{candidatosBean.filteredElements}"
+							globalFilterFunction="#{candidatosBean.globalFilterFunction}" -->
+							<f:facet name="header"></f:facet>
+							<p:ajax event="rowSelect" update=":frm:select-element-content" />
+							<p:ajax event="rowUnselect" update=":frm:select-element-content" />
+							<p:ajax event="rowSelectCheckbox"
+								update=":frm:select-element-content" />
+							<p:ajax event="rowUnselectCheckbox"
+								update=":frm:select-element-content" />
+							<p:ajax event="toggleSelect" update=":frm:select-element-content" />
+
+							<p:column style="width:65px;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column exportable="false" headerText=""
+								style="width:100px;text-align:center;">
+								<div style="width: 100%">
+									<img style="max-width: 80px;"
+										src="#{candidatosBean.foto(element.foto)}"
+										class="img-circle elevation-2" />
+								</div>
+							</p:column>
+							<p:column headerText="Cédula">
+								<h:outputText value="#{element.cedula}" />
+							</p:column>
+							<p:column headerText="Apellidos" sortBy="#{element.apellido}">
+								<h:outputText value="#{element.apellido}" />
+							</p:column>
+							<p:column headerText="Mombres" sortBy="#{element.nombre}">
+								<h:outputText value="#{element.nombre}" />
+							</p:column>
+							<p:column headerText="Dirección" sortBy="#{element.direccion}">
+								<h:outputText value="#{element.direccion}" />
+							</p:column>
+							<p:column headerText="Teléfono" sortBy="#{element.telefono}">
+								<h:outputText value="#{element.telefono}" />
+							</p:column>
+							<p:column headerText="Celular" sortBy="#{element.celular}"
+								style="width:150px;">
+								<h:outputText value="#{element.celular}" />
+							</p:column>
+							<p:column headerText="Email" sortBy="#{element.email}">
+								<h:outputText value="#{element.email}" />
+							</p:column>
+							<p:column headerText="Fecha Nacimiento"
+								sortBy="#{element.fechaNacimiento}" style="width:120px;">
+								<h:outputText value="#{element.fechaNacimiento}" />
+							</p:column>
+							<p:column headerText="Fecha Registro"
+								sortBy="#{element.fechaRegistro}" style="width:120px;">
+								<h:outputText value="#{element.fechaRegistro}" />
+							</p:column>
+							<p:column headerText="Por completar" exportable="false"
+								style="width:115px;">
+								<ul style="padding: 5px; font-size: 12px;">
+									<h:outputText
+										value="#{candidatosBean.porCompletar(element.user)}"
+										escape="false" />
+								</ul>
+							</p:column>
+
+							<p:column exportable="false" style="width:130px;">
+								<p:commandButton icon="pi pi-refresh"
+									update=":frm:manage-element-content"
+									oncomplete="PF('manageElementDialog').show()"
+									styleClass="edit-button rounded-button ui-button-success"
+									process="@this" title="Cambiar password"
+									onstart="PF('statusDialog').show()"
+									onsuccess="PF('statusDialog').hide()">
+									<f:setPropertyActionListener value="#{element}"
+										target="#{candidatosBean.selectedElement}" />
+									<p:resetInput target=":frm:manage-element-content" />
+								</p:commandButton>
+								<p:commandButton icon="pi pi-file-pdf"
+									styleClass="edit-button rounded-button ui-button-success"
+									immediate="true" onmouseover="this.style.color='#ffffff';"
+									onmouseout="this.style.color='';"
+									action="#{candidatosBean.openPdf(element.user.username)}"
+									ajax="false" title="Descargar CV formado LRG">
+								</p:commandButton>
+
+							</p:column>
+						</p:dataTable>
+						<!-- EDITANDO -->
+						<p:dialog header="Actualizar" showEffect="fade" modal="true"
+							widgetVar="manageElementDialog" responsive="true" width="400px">
+							<p:outputPanel id="manage-element-content" class="ui-fluid">
+								<p:outputPanel
+									rendered="#{not empty candidatosBean.selectedElement}">
+									<div class="p-field">
+										Candidato<br /> #{candidatosBean.selectedElement.apellido}
+										#{candidatosBean.selectedElement.nombre}
+									</div>
+									<div class="p-field">
+										<p:outputLabel class="form-label" value="Nueva contraseña" />
+										<p:password id="Password" feedback="true"
+											promptLabel="Ingresa tu contraseña" weakLabel="Débil"
+											goodLabel="Buena" strongLabel="Fuerte"
+											autocomplete="new-password" required="true"
+											requiredMessage="Ingrese Contraseña"
+											value="#{candidatosBean.password}" />
+										<small class="p-d-block">Use por lo menos una letra
+											mayúscula, una minúscula y un número</small>
+									</div>
+								</p:outputPanel>
+							</p:outputPanel>
+
+							<f:facet name="footer">
+								<p:commandButton value="Guardar" icon="pi pi-check"
+									actionListener="#{candidatosBean.saveElement}"
+									update="manage-element-content growl"
+									process="manage-element-content @this" />
+								<p:commandButton value="Cancelar" icon="pi pi-times"
+									onclick="PF('manageElementDialogAdmin').hide()"
+									class="ui-button-secondary" />
+							</f:facet>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+
+			<script>
+				//<![CDATA[
+
+				//]]>
+			</script>
+		</h:form>
+	</ui:define>
+</ui:composition>

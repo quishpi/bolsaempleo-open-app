@@ -1,5 +1,6 @@
 package ec.edu.insteclrg.service.candidato;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class DatosCandidatoService extends GenericCRUDServiceImpl<DatosCandidato
 
 	public Optional<DatosCandidato> buscarPorCedula(String cedula) {
 		return entityRepository.findByCedula(cedula);
+	}
+
+	public List<DatosCandidato> buscarPorPatron(String patron) {
+		return entityRepository.findEmployeeByPatron(patron);
 	}
 
 }

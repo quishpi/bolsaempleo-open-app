@@ -24,4 +24,8 @@ public class DatosAdminService extends GenericCRUDServiceImpl<DatosAdmin, Long> 
 		return entityRepository.findByCedula(cedula);
 	}
 
+	public Optional<DatosAdmin> buscarPorEmail(String email) {
+		return entityRepository.findByEmail(email);
+	}
+
 }

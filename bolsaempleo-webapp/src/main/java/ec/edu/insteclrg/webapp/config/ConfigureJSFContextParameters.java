@@ -22,7 +22,7 @@ public class ConfigureJSFContextParameters implements ServletContextInitializer 
 		servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");
 
 		servletContext.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", "true");
-		servletContext.setInitParameter("primefaces.THEME", "bootstrap");// humanity, flick, bootstrap;
+		servletContext.setInitParameter("primefaces.THEME", "hot-sneaks");// humanity, flick, bootstrap,blitzer,hot-sneaks;
 		servletContext.setInitParameter("listener-class", "com.sun.faces.config.ConfigureListener");
 
 		//servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", "true");

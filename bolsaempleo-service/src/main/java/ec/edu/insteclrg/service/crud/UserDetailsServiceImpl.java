@@ -75,7 +75,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 
 		} else if (authority.equals(UserRole.ROLE_ADMIN.toString())) {
-			Optional<DatosAdmin> adminOptional = adminService.buscarPorCedula(username);
+			Optional<DatosAdmin> adminOptional = adminService.buscarPorEmail(username);
 			if (adminOptional.isPresent()) {
 				fullname = adminOptional.get().getNombre() + " " + adminOptional.get().getApellido();
 			}

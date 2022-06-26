@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRUDService<ENTITY, TYPE> {
 
 	@Autowired
@@ -52,9 +51,8 @@ public abstract class GenericCRUDServiceImpl<ENTITY, TYPE> implements GenericCRU
 	public List<ENTITY> buscarTodo(ENTITY entity) {
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths("id");
 		List<ENTITY> lstObjs = repository.findAll(Example.of(entity, matcher));
-
-		if (lstObjs.isEmpty())
-			throw new AppException(String.format("Registro no existe en la base de datos", entity));
+		//if (lstObjs.isEmpty())
+		//	throw new AppException(String.format("Registro no existe en la base de datos", entity));
 		return lstObjs;
 	}
 

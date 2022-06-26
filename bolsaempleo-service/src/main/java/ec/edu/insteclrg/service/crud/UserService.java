@@ -65,4 +65,16 @@ public class UserService extends GenericCRUDServiceImpl<User, Long> {
 		user.setPassword(newEncodedPassword);
 		entityRepository.save(user);
 	}
+	public void actualizarPasswordAdmin(String username, PasswordDTO passwordDTO) {
+		String newEncodedPassword = passwordEncoder.encode(passwordDTO.getNewPassword());
+		User usuario = new User();
+		usuario.setUsername(username);
+		Optional<User> optionalUser = buscar(usuario);
+		if (!optionalUser.isPresent()) {
+			throw new AppException(String.format("El usuario %s no se encuentra registrado", username));
+		}
+		User user = optionalUser.get();
+		user.setPassword(newEncodedPassword);
+		entityRepository.save(user);
+	}
 }

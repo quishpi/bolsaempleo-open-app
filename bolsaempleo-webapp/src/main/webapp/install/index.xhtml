@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		href="/resources/plugins-web/colorlib/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" />
+	<link rel="stylesheet"
+		href="/resources/plugins-web/colorlib/css/style.css" />
+	<!--  <link rel="stylesheet"
+		href="/resources/plugins-web/css/webapp.css" />
+	 -->
+	<!-- <script src="/resources/adminlte-31/plugins/jquery/jquery.js"></script> -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</h:head>
+<h:body>
+	<h:outputStylesheet name="plugins-web/css/webapp.css" />
+	<div class="wrapper">
+		<div class="inner">
+			<div class="image-holder">
+				<img
+					src="/resources/plugins-web/colorlib/images/luisrogerio_logo.jpg"
+					alt="" />
+			</div>
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<p:graphicImage url="/resources/images/loadingbar.gif" />
+			</p:dialog>
+			<h:form id="frm" update="growl">
+				<p:growl id="growl" sticky="false" life="5000" showDetail="false"
+					autoUpdate="true" />
+				<h3>ADMINISTRADOR - Registro</h3>
+				<div class="form-wrapper">
+					<p:outputLabel for="txtCedula" class="form-label"
+						value="Cédula/Pasaporte" />
+					<p:inputText id="txtCedula" type="text" required="true"
+						requiredMessage="Ingrese Cédula/Pasaporte"
+						value="#{adminRegistroBean.admin.cedula}" />
+				</div>
+				<div class="form-wrapper">
+					<p:outputLabel for="txtNombres" class="form-label" value="Nombres" />
+					<p:inputText id="txtNombres" type="text" required="true"
+						requiredMessage="Ingrese Nombres"
+						value="#{adminRegistroBean.admin.nombre}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
+				</div>
+				<div class="form-wrapper">
+					<p:outputLabel for="txtApellidos" class="form-label"
+						value="Apellidos" />
+					<p:inputText id="txtApellidos" type="text" required="true"
+						requiredMessage="Ingrese Apellidos"
+						value="#{adminRegistroBean.admin.apellido}"
+						style="text-transform: uppercase" converter="toUpperCaseConverter" />
+				</div>
+				<div class="form-wrapper">
+					<p:outputLabel for="txtEmail" class="form-label" value="Email" />
+					<p:inputText id="txtEmail" type="text" required="true"
+						requiredMessage="Ingrese Email"
+						value="#{adminRegistroBean.admin.email}" />
+				</div>
+				<div class="form-wrapper">
+					<p:outputLabel for="cmbProvincia" class="form-label"
+						value="Residencia" />
+					<p:selectOneMenu id="cmbProvincia" required="true"
+						requiredMessage="Provincia es obligatorio "
+						value="#{adminRegistroBean.selectedProvincia}"
+						converter="entityConverter" style="width:100%;">
+						<f:selectItem itemLabel="Seleccione" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{adminRegistroBean.provincias}"
+							var="provincia" itemLabel="#{provincia.nombre}"
+							itemValue="#{provincia}" />
+						<p:ajax listener="#{adminRegistroBean.onProvinciaChange()}"
+							onstart="PF('statusDialog').show()"
+							onsuccess="PF('statusDialog').hide()" update="cmbCiudad" />
+					</p:selectOneMenu>
+
+					<p:selectOneMenu id="cmbCiudad" required="true"
+						requiredMessage="Ciudad es obligatorio "
+						value="#{adminRegistroBean.selectedCiudad}"
+						converter="entityConverter" style="width:100%;"
+						disabled="#{adminRegistroBean.selectedProvincia == null}">
+						<f:selectItem itemLabel="Seleccione" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{adminRegistroBean.ciudades}"
+							var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
+					</p:selectOneMenu>
+				</div>
+				<div class="form-wrapper">
+					<p:outputLabel for="txtContrasena" class="form-label"
+						value="Contraseña" />
+					<p:password id="txtContrasena" feedback="true"
+						promptLabel="Ingresa tu contraseña" weakLabel="Débil"
+						goodLabel="Buena" strongLabel="Fuerte" autocomplete="new-password"
+						required="true" requiredMessage="Ingrese Contraseña"
+						value="#{adminRegistroBean.password}" />
+					<small class="p-d-block">Use por lo menos una letra
+						mayúscula, una minúscula y un número</small>
+				</div>
+				<div class="form-wrapper">
+					<p:outputLabel for="txtConfContrasena" class="form-label"
+						value="Confirme Contraseña" />
+					<p:password id="txtConfContrasena" feedback="true"
+						promptLabel="Repita contraseña" weakLabel="Débil"
+						goodLabel="Buena" strongLabel="Fuerte" autocomplete="new-password"
+						required="true" requiredMessage="Confirme Contraseña"
+						value="#{adminRegistroBean.repitePassword}" />
+				</div>
+				<div class="form-wrapper text-center">
+					<p:commandButton value="Registrar" ajax="true" update="frm"
+						onstart="PF('statusDialog').show()"
+						onsuccess="PF('statusDialog').hide()"
+						actionListener="#{adminRegistroBean.guardar()}" />
+				</div>
+				<br />
+				<div class="form-wrapper text-center">
+					<p>
+						Si ya tienes una cuenta puedes <a class="btn btn-light btn-sm"
+							href="../login.xhtml">Iniciar Sesión</a>
+					</p>
+				</div>
+			</h:form>
+		</div>
+	</div>
+
+</h:body>
+</html>

@@ -39,3 +39,39 @@ border-color: #007bff !important;
 	margin-bottom: 0rem;
 }
 
+.buttonCV {
+  border: solid 1px #00f;
+  color: white;
+  padding: 5px 3px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 0px;
+  cursor: pointer;
+  width: 100%;
+}
+#contenedor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#contenedor > div {
+  width: 50%;
+}
+
+.ui-g-12{
+padding: .5em !important;
+}
+
+.errorCell {
+	background-color: #950000 !important;
+	background-image: none !important;
+	color: #ffffff !important;
+}
+.disponibleCell {
+	background-color: #0f0 !important;
+	background-image: none !important;
+	color: #ffffff !important;
+}
+

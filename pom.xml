@@ -28,7 +28,6 @@
 	<modules>
 		<module>bolsaempleo-domain</module>
 		<module>bolsaempleo-persistence</module>
-		<module>bolsaempleo-app</module>
 		<module>bolsaempleo-service</module>
 		<module>bolsaempleo-common</module>
 		<module>bolsaempleo-webapp</module>

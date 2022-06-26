@@ -1,5 +1,6 @@
 package ec.edu.insteclrg.service.empleador;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,7 @@ public class DatosEmpleadorService extends GenericCRUDServiceImpl<DatosEmpleador
 	public Optional<DatosEmpleador> buscarPorRuc(String ruc) {
 		return entityRepository.findByRuc(ruc);
 	}
-
+	public List<DatosEmpleador> buscarPorPatron(String patron) {
+		return entityRepository.findEmployeeByNombreOrApellido(patron);
+	}
 }

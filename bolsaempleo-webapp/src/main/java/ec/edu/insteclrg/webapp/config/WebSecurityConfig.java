@@ -28,7 +28,7 @@ import ec.edu.insteclrg.service.crud.UserDetailsServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	String[] resources = new String[] { "/resources/**", "/javax.faces.resource/**" };
-	String[] registros = new String[] { "/candidato/**", "/empleador/**" };
+	String[] registros = new String[] { "/candidato/**", "/empleador/**", "/install/**" };
 	String[] mensajes = new String[] { "/success.xhtml", "/successpassword.xhtml", "/404.xhtml" };
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();

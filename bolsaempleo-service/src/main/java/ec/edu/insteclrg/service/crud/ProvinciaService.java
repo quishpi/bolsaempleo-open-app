@@ -19,6 +19,4 @@ public class ProvinciaService extends GenericCRUDServiceImpl<Provincia, Long> {
 	public Optional<Provincia> buscar(Provincia entity) {
 		return entityRepository.findById(entity.getId());
 	}
-
-
 }

@@ -1,6 +1,5 @@
 package ec.edu.insteclrg.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +25,7 @@ public class Ciudad {
 	@Column
 	private String nombre;
 
-	@ManyToOne(cascade = CascadeType.ALL, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "provincia_id") // , referencedColumnName = "id")
 	private Provincia provincia;
 

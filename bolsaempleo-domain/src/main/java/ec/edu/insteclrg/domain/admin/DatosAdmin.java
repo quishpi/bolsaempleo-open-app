@@ -61,13 +61,12 @@ public class DatosAdmin {
 	@Column
 	private String celular;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	@Column
 	private LocalDate fechaNacimiento;
 
-	
 	@Column
 	private LocalDate fechaRegistro;
 

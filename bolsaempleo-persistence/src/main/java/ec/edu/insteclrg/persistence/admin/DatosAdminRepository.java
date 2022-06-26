@@ -7,9 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import ec.edu.insteclrg.domain.admin.DatosAdmin;
 
-
 @Repository
 public interface DatosAdminRepository extends JpaRepository<DatosAdmin, Long> {
-	
+
 	Optional<DatosAdmin> findByCedula(String cedula);
+
+	Optional<DatosAdmin> findByEmail(String email);
 }
