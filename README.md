@@ -6,3 +6,10 @@ Instituto Superior Tecnológico Luis Rogerio González
 * The proyect was set up as a [Maven Project](https://maven.apache.org/install.html) (v.3.6.0).
 * Spring Boot 2.5.5
 * Jasperreports 6.18.1
+
+## Developers
+* Juan Buri (juan.buri@insteclrg.edu.ec)
+* Pedro Ordoñez (pedro.ordonez@insteclrg.edu.ec)
+
+## Project manager / Developer
+* In. Luis Quishpi (luis.quishpi@isnteclrg.edu.ec | luis.quishpi@gmail.com)
